@@ -3,7 +3,7 @@ using UnityEngine;
 public class PaddleScript : MonoBehaviour
 {
     public Rigidbody rb;
-    float maxSpeed = 7;
+    float maxSpeed = 14f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

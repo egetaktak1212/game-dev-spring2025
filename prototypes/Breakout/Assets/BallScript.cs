@@ -79,6 +79,9 @@ public class BallScript : MonoBehaviour
         if (other.CompareTag("brick") || other.CompareTag("supabrick")) {
             Destroy(other.gameObject);
         }
+        if (other.CompareTag("kill")) { 
+            Destroy(gameObject);
+        }
     }
 
 
