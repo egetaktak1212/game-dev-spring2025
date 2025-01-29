@@ -121,29 +121,30 @@ namespace StarterAssets
 
 		private void Move()
 		{
+            float hAxis = Input.GetAxis("Horizontal");
+            float vAxis = Input.GetAxis("Vertical");
+            Vector3 amountToMove = new Vector3(hAxis, 0, vAxis) * MoveSpeed;
+
+            Vector3 camForward = _mainCamera.transform.forward;
+            Vector3 camRight = _mainCamera.transform.right;
+
+            camForward.y = 0;
+            camRight.y = 0;
+            camForward = camForward.normalized;
+            camRight = camRight.normalized;
+
+            Vector3 forwardRelative = amountToMove.z * camForward;
+            Vector3 rightRelative = amountToMove.x * camRight;
+
+            Vector3 moveDir = forwardRelative + rightRelative;
+
+            amountToMove = new Vector3(moveDir.x, 0, moveDir.z);
 
 
-			// a reference to the players current horizontal velocity
-			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            amountToMove *= Time.deltaTime;
+            _controller.Move(amountToMove);
 
-			float speedOffset = 0.1f;
-			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
-		
-
-			// normalise input direction
-			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-
-			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is a move input rotate player when the player is moving
-			if (_input.move != Vector2.zero)
-			{
-				// move
-				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
-			}
-
-			// move the player
-			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-		}
+        }
 
 		
 
