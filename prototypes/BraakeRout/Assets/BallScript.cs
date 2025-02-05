@@ -13,11 +13,23 @@ public class BallScript : MonoBehaviour
     private Coroutine waitCoroutine;
     public Transform camera;
 
+    private Renderer ballRender;
+
+    Color safeColor = Color.green;
+    Color deadColor = Color.red;
+
+
+
+
+
+
     void Start()
     {
+        ballRender = GetComponent<Renderer>();
         rb = GetComponent<Rigidbody>();
         direction = new Vector3(-1, 0.5f, 0.1f).normalized; 
         rb.velocity = direction * speed; 
+        ballRender.material.color = safeColor;
     }
 
     void Update()
@@ -36,30 +48,39 @@ public class BallScript : MonoBehaviour
         {
             direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;
             if (collision.collider.CompareTag("Block")) {
-                Vector3 normaldir = collision.contacts[0].normal;
                 Destroy(collision.gameObject);
-                direction = Vector3.Reflect(direction, normaldir).normalized;
             }
-
-
         }
         else if (!wall) { 
             waitCoroutine = StartCoroutine(waitthree(collision));
         }
     }
 
+
     private IEnumerator waitthree(Collision collision)
     {
         wall = true;
         Vector3 oldvelocity = rb.velocity;
         rb.velocity = Vector3.zero;
-        yield return new WaitForSeconds(1f);
+
+        float duration = 1f;
+        float timeElapsed = 0f;
+
+        while (timeElapsed < duration) {
+            float t = timeElapsed / duration;
+            Color current = Color.Lerp(safeColor, deadColor, t);
+
+            ballRender.material.color = current;
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+
+        }
         Debug.Log("DEAD");
         Time.timeScale = 0f;
-        //direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;
-        //rb.velocity = direction * speed;
-        //wall = false;
+
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -69,6 +90,7 @@ public class BallScript : MonoBehaviour
             direction = new Vector3(Camera.main.transform.forward.x, Camera.main.transform.forward.y, Camera.main.transform.forward.z).normalized;
             rb.velocity = direction * speed;
             wall = false;
+            ballRender.material.color = safeColor;
         }
     }
 
