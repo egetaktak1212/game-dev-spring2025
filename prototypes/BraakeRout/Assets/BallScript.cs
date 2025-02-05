@@ -11,6 +11,7 @@ public class BallScript : MonoBehaviour
     public Vector3 direction;
     bool wall = false;
     private Coroutine waitCoroutine;
+    Coroutine superCoroutine;
     public Transform camera;
 
     private Renderer ballRender;
@@ -18,13 +19,19 @@ public class BallScript : MonoBehaviour
     Color safeColor = Color.green;
     Color deadColor = Color.red;
 
-
+    public ItemHandler itemHandler;
+    bool magnetActiveLast = false;
+    float initialSpeed;
+    float maxSpeed = 8f;
+    bool superBall = false;
+    Vector3 originalSize;
 
 
 
 
     void Start()
     {
+        originalSize = transform.localScale;
         ballRender = GetComponent<Renderer>();
         rb = GetComponent<Rigidbody>();
         direction = new Vector3(-1, 0.5f, 0.1f).normalized; 
@@ -34,21 +41,99 @@ public class BallScript : MonoBehaviour
 
     void Update()
     {
-        
-        if (!wall)
+        if (Input.GetKeyDown(KeyCode.P)) {
+            enterSuperBall();
+        }
+
+
+
+
+        if (itemHandler.actionState["Magnet"])
         {
-            speed += acceleration * Time.deltaTime;
-            rb.velocity = direction * speed;
+            if (!magnetActiveLast)
+            {
+                initialSpeed = speed;
+                magnetActiveLast = true;
+            }
+
+            Vector3 magnetDir = Camera.main.transform.position - transform.position;
+            magnetDir.Normalize();
+
+            float pullStrength = 5f;
+            speed = Mathf.MoveTowards(speed, maxSpeed, 2f * Time.deltaTime);
+
+            rb.velocity = Vector3.Lerp(rb.velocity, magnetDir * speed, pullStrength * Time.deltaTime);
+        }
+        else
+        {
+            if (magnetActiveLast) 
+            {
+                speed = initialSpeed; 
+                magnetActiveLast = false;  
+            }
+
+            if (!wall)
+            {
+                if (speed < 5f)
+                {
+                    speed += acceleration * Time.deltaTime;
+                }
+                rb.velocity = direction * speed;
+            }
         }
     }
+
+  
+
+    public void enterSuperBall()
+    {
+        if (!superBall)
+        {
+            superBall = true;
+            transform.localScale = originalSize * 3f;
+            superCoroutine = StartCoroutine(SuperBallDuration());
+        }
+        else {
+            //StopCoroutine(superCoroutine);
+            //StartCoroutine(SuperBallDuration());
+        
+        }
+    }
+
+    public void leaveSuperBall()
+    {
+        Debug.Log("A");
+        superBall = false;
+        transform.localScale = originalSize; 
+    }
+
+    private IEnumerator SuperBallDuration()
+    {
+        Debug.Log("B");
+        yield return new WaitForSeconds(6f);
+        Debug.Log("c");
+        leaveSuperBall(); 
+    }
+
+
+
 
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.collider.CompareTag("Finish"))
         {
-            direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;
-            if (collision.collider.CompareTag("Block")) {
-                Destroy(collision.gameObject);
+            if (!collision.collider.CompareTag("Block"))
+            {
+                direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;
+            }
+            else {
+                if (!superBall)
+                {
+                    direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;
+                }
+                BrickExplode brickCode = collision.gameObject.GetComponent<BrickExplode>();
+                brickCode.explode();
+                //Destroy(collision.gameObject);
             }
         }
         else if (!wall) { 
