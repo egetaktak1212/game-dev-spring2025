@@ -58,8 +58,9 @@ public class Bullet : MonoBehaviour
             yield return null;
 
         }
-        Debug.Log("DEAD");
-        Time.timeScale = 0f;
+
+
+        GM.instance.Lose("Didn't destroy bullets in time");
 
     }
 

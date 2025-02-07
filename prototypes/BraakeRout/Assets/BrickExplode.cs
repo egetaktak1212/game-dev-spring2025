@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BrickExplode : MonoBehaviour
@@ -18,6 +19,14 @@ public class BrickExplode : MonoBehaviour
     Color superColor = Color.yellow;
 
     // Start is called before the first frame update
+
+
+    private void OnEnable()
+    {
+        GM.instance.BrickList.Add(this);
+    }
+
+
     void Start()
     {
         if (superBall) { 
@@ -49,8 +58,8 @@ public class BrickExplode : MonoBehaviour
             }
         }
 
-
-
+        GM.instance.BrickList.Remove(this);
+        GM.instance.didWeWin();
 
 
         Destroy(gameObject);

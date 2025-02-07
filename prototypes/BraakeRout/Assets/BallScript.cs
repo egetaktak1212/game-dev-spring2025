@@ -39,6 +39,7 @@ public class BallScript : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start");
         originalSize = transform.localScale;
         ballRender = GetComponent<Renderer>();
         rb = GetComponent<Rigidbody>();
@@ -173,9 +174,13 @@ public class BallScript : MonoBehaviour
             yield return null;
 
         }
-        Debug.Log("DEAD");
-        Time.timeScale = 0f;
 
+
+        ballDied();
+    }
+
+    void ballDied() {
+        GM.instance.Lose("Didn't hit the ball back in time");
     }
 
 

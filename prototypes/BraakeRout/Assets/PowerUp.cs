@@ -41,7 +41,7 @@ public class PowerUp : MonoBehaviour
         UnityEngine.Debug.Log("trigger entered");
         if (other.CompareTag("Respawn")) {
             UnityEngine.Debug.Log("a");
-            GM.bigMode();
+            GM.instance.bigMode();
             
             Destroy(gameObject);
         }
