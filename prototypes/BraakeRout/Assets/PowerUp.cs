@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,13 +13,15 @@ public class PowerUp : MonoBehaviour
     bool wall = false;
     public Coroutine waitCoroutine;
     GameObject sphere;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.velocity = direction * speed;
 
-        GameObject sphere = GameObject.Find("Sphere");
+        sphere = GameObject.Find("Sphere");
         UnityEngine.Debug.Log(sphere.GetComponentCount());
 
     }
@@ -38,7 +41,7 @@ public class PowerUp : MonoBehaviour
         UnityEngine.Debug.Log("trigger entered");
         if (other.CompareTag("Respawn")) {
             UnityEngine.Debug.Log("a");
-            UnityEngine.Debug.Log(sphere.GetComponent<BallScript>());
+            GM.bigMode();
             
             Destroy(gameObject);
         }

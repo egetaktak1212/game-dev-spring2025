@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class BrickExplode : MonoBehaviour
     public GameObject powerUp;
 
     public Material mat;
+
+    
+
 
     Color superColor = Color.yellow;
 
@@ -24,7 +28,7 @@ public class BrickExplode : MonoBehaviour
 
     public void explode()
     {
-        if (Random.value <= 0.25f && !superBall)
+        if (UnityEngine.Random.value <= 0.25f && !superBall)
         {
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0, 0, 90));
 

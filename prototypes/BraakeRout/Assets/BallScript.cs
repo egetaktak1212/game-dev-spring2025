@@ -27,7 +27,15 @@ public class BallScript : MonoBehaviour
     Vector3 originalSize;
 
 
+    private void OnEnable()
+    {
+        GM.goBigMode += enterSuperBall;
+    }
 
+    private void OnDisable()
+    {
+        GM.goBigMode -= enterSuperBall;
+    }
 
     void Start()
     {
@@ -36,7 +44,7 @@ public class BallScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         direction = new Vector3(-1, 0.5f, 0.1f).normalized; 
         rb.velocity = direction * speed; 
-        ballRender.material.color = safeColor;
+        ballRender.material.color = safeColor;        
     }
 
     void Update()
@@ -91,6 +99,10 @@ public class BallScript : MonoBehaviour
         {
             superBall = true;
             transform.localScale = originalSize * 3f;
+            if (superCoroutine != null)
+            {
+                StopCoroutine(superCoroutine);
+            }
             superCoroutine = StartCoroutine(SuperBallDuration());
         }
         else {
@@ -110,7 +122,7 @@ public class BallScript : MonoBehaviour
     private IEnumerator SuperBallDuration()
     {
         Debug.Log("B");
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(3f);
         Debug.Log("c");
         leaveSuperBall(); 
     }
@@ -171,7 +183,7 @@ public class BallScript : MonoBehaviour
     {
         if (other.CompareTag("Respawn")) { 
             //exit numerator
-            StopAllCoroutines();
+            StopCoroutine(waitCoroutine);
             direction = new Vector3(Camera.main.transform.forward.x, Camera.main.transform.forward.y, Camera.main.transform.forward.z).normalized;
             rb.velocity = direction * speed;
             wall = false;

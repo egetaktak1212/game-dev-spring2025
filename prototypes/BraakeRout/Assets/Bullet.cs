@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    float speed = 3f;
+    float speed = 1f;
     Vector3 direction;
     Rigidbody rb;
     Renderer bulletRender;
