@@ -1,112 +1,77 @@
 # Breakout Prototypes
 
-## breakout-1
+## breakout-1 and 2a
 
-<img src="./images/breakout1.jpg" alt="Breakout 2600 box art" align="right" width="350">
+<img src="./images/breakout1.jpg" alt="B" align="right" width="150">
 
-Create a small gameplay prototype based on Breakout.
 
-Here are some things to keep in mind:
-- try to make your prototype as engaging as possible
-- your prototype should be arranged to explore and demonstrate the new gameplay features - you added (i.e. design levels that show your game in its best light)
-- focus on gameplay rather than story or visual effects
-- use abstract visuals (primitive shapes)
-- think small!
+Two simple prototypes testing a different respective ability.
 
-In class, be prepared to: 
-- playtest your game with your classmates
-- answer the question "What is you prototype testing?"
-- be prepared to receive critical feedback from your classmates
-- share something interesting you learned about or used in order to make your prototype (share technical knowledge)
+What I was trying to learn:
+- My goal was to implement a special brick with a unique color and a unique ability which would apply to the ball automatically.
+- I learned that having an ability that spawns additional balls can add complexity and tension, but it would make the scene too cluttered for my future goals.
+<img src="./images/breakout2a.jpg" alt="B" align="right" width="150">
+- I learned how to implement the super (big) ball power up. My goal with this ability was that the ball would go through the bricks rather than bounce off of them, destroying many with each bounce. I would use this in later prototypes.
 
-## breakout-2a and breakout-2b
+Playtest Result:
+- Playtesting made it clear that players enjoyed the super ball power up. It was satisfying to see it tear through all the bricks it touched. 
 
-*DUE: 1-29-25*
+[Link to Play Prototype 1](https://egetaktak1212.github.io/game-dev-spring2025/builds/breakout-1/)
+[Link to Play Prototype 2a](https://egetaktak1212.github.io/game-dev-spring2025/builds/breakout-2a/)
+## breakout-2b
+Breakout's implementation in 3D
 
-<img src="./images/arkanoid.png" alt="Arkanoid NES gameplay" align="right" width="350">
+<img src="./images/breakout2b.jpg" alt="" align="right" width="350">
 
-With a partner, create two more gameplay prototypes based on Breakout. As you consider your designs, strive to create gameplay that involves *something for the player to become good at* and a structure that gives the player the chance to learn to become skilled/good at playing your game. 
+I was experimenting with:
+- breakout in a 3D environment where you are the paddle
+- Having the ball bouncing in 3D rather than 2D, meaning the player could aim the ball more precisely.
+- Having a clear field that marks a danger zone for the ball, giving the player time to hit the ball but also killing the player if they take too long.
 
-Additionally, incorporate at least one element of `polish` (as described in Game Feel) in at least one of the prototypes.
+What I learned:
+- I learned how to have the ball bounce without gravity using reflections off of the collision's normals.
+- from playtesters:
+  - I learned that there needs to be a crosshair at the center to communicate to the player that you must look at the ball to bounce it back
+  - I learned that the clear wall (danger zone) should have a visual element besides the floor to tell the player where to focus on.
+  - I learned that having a lot of space behind the player for them to walk around made them lose due to the range of the player's racket.
+  - I learned that I should have a visual indicator for how long the player has before they die to the ball.
 
-You may also consider creating series of small "levels" that introduce your game mechanic, and "train" a player to become skilled at playing your game (given the short amount of time, this may only be a couple of levels).
+[Link to Play](https://egetaktak1212.github.io/game-dev-spring2025/builds/breakout-2b/)
 
-Your prototypes should be playable online (see instructions below).
+## Final Prototype (built off of breakout-3)
 
-## breakout-3
+Final prototype combined with final 3D Build.
+(I accidentally built the final onto the breakout-3 build file)
 
-*DUE: 2-5-25*
+<img src="./images/breakout3a.jpg" alt="B" align="right" width="350">
 
-<img src="./images/hyperballoid.png" alt="Hyperballoid PS3 gameplay" align="right" width="450">
+I was experimenting with:
+- Having a shooting system.
+  - I wanted to add more mechanics to spice up the gameplay, add tension, and give more for the player to do while waiting for the ball.
+- An item system where you also had a magnet that you could equip.
+  - the magnet's purpose was to help the player get the ball unstuck and also allow for more expression. Because the ball maintains its direction regardless of magnet bull, it could lead to more interesting strategies.
+- Adding power ups. When the player destroys a special brick, they have to hit its resulting projectile to apply the super ball feature from prototype 2a. This adds risk-reward, as the big ball will generate more bullets but will clear more bricks.
+- More visual communication
+<img src="./images/breakout3b.jpg" alt="B" align="right" width="350">
+  - A trail to help the player track the balls direction
+  - The barrier turning red upon impact with a bullet to warn the player.
+  - Colors of the bullets and ball changing to indicate the player running out of time
+  - A timer to help track progress and skill
 
-Create, or refine, a prototype that can reliably entertain a player for **FIVE MINUTES** primarily through gameplay.
+I learned:
+- How to use layers to avoid unwanted collisions, such as the ball bouncing off of the bullets or the bullets colliding with bricks.
+- How to use trails and emission
+- How to use raycasting to simulate shooting at the bullets
+- How to cast projectiles from objects upon collision with the ball
+- From prototypes:
+   - that switching to your "pistol" by holding M2 wasn't intuitive, which I removed.
+   - how players approach an FPS game, where they would easily panic and run around rather than approach the situation calmly
+   - that the bullets were moving and killing the player too quickly. Under stress of many projectiles approaching, the player would easily get distracted and lose
+   - that the players needed time before the game started to be situated, and a notification that they had died. Although obvious, it wasn't a priority until testing.
+   - that, once again, big ball = *dopamine*
 
-When designing your prototype, consider why people play games for a period of time. Here are some ideas:
+[Link to Outdated Prototype 3](https://egetaktak1212.github.io/game-dev-spring2025/builds/breakout-3/)
 
-- to gain mastery of a skill
-- to solve a puzzle
-- to see what happens when... (i.e. discover aspects of the game)
-- to complete the level's goal
-- to complete an optional task (e.g. collect a bunch of the "challenge" collectables)
-- to see numbers go up
-- narrative reasons (this shouldn't be the main reason)
+[Link to Play Final](https://egetaktak1212.github.io/game-dev-spring2025/builds/breakout-final/)
 
-Keep in mind the following features as well:
 
-- **Purposeful Action:** Players should be able to understand the game state enough to formulate a goal, and take steps to achieve it.
-- **Sense of Responsibility:** Players should feel as though their failure or success to achieve their goals is the result of their decisions (at least partially).
-- **Uncertainty:** The player should always wonder if they are going to be able to actually achieve their goals. This could be the result of skill, or even because of some random events (but too random is bad).
-- **Require Skill:** There should be something to learn through playing your game. Is you are good at the game, what are you good at?
-- **Progression:** The player should be presented with a series of challenges with increasing difficculty. This may be presented instantiated as levels that require the player to become better at using the core mechanic, but it could also be one level where making progress toward the goal requires learning how to better use the core mechanic.
-
-This prototype should be more refined than the other ones. Try to make this **the** Breakout prototype that you remember making, or have people play, for years to come!
-
-Your prototype should be playable online (see instructions below).
-
-## Final Prototype
-
-<img src="./images/breakout-beyond.png" alt="Hyperballoid PS3 gameplay" align="right" width="475">
-
-Create one more version of Breakout based on one of your previous prototypes. Rather than adding a lot of extra features, try to make the best part of your prototype even better. Are there refinements you can make to create better 'game feel'? Can you add some visual effects to increase the players investment in playing the game? Keep the what is written above for the `breakout-3` assignment. Challenge yourself to think small rather than big.
-
-Your prototype should be playable online (see instructions below).
-
-## Reflection
-
-Reflect on your experience creating 4 or 5 prototypes inspired by Breakout. For each prototype, create a section with the folloling:
-
-- What were you experimenting with with your prototype?
-- What did you learn from your prototype?
-- Did you learned anything from your playtesters in class? What?
-- Include an image of the game (example below)
-- Include a link to your game
-
-Your write up should be written in a file named `README.md` in the [markdown format](https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet). The README.md should be placed in the following directory of your repository: `game-dev-spring2025/prototypes/breakout`.
-
-If you did everything right, you should see your markdown file rendered as a basic website when you go the following link:
-
-```
-https://github.com/<YOUR_GITHUB_USERNAME>/game-dev-spring2025/tree/main/prototypes/breakout
-```
-
-Link markdown example: 
-`[Play Breakout Prototype 1](https://github.com/mtreanor/game615-spring2025/blob/main/prototypes/breakout-physics)`
-
-Image markdown example (assuming you have a folder named images in the same folder as the reflection README.md file): 
-`<img src="./images/breakout.png" alt="Breakout gameplay" align="right" width="350">`
-
-# Submitting your prototypes
-
-Build your prototype for "Web" and save the build in a folder named for each prototype: `breakout-1`, `breakout-2a`, `breakout-2b`, `breakout-3`, and `breakout-final`.
-
-Your prototypes should be playble online by going to the following links:
-
-```
-http://<YOUR_GITHUB_USERNAME>.github.io/game-dev-spring2025/builds/breakout-1
-http://<YOUR_GITHUB_USERNAME>.github.io/game-dev-spring2025/builds/breakout-2a
-http://<YOUR_GITHUB_USERNAME>.github.io/game-dev-spring2025/builds/breakout-2b
-http://<YOUR_GITHUB_USERNAME>.github.io/game-dev-spring2025/builds/breakout-3
-http://<YOUR_GITHUB_USERNAME>.github.io/game-dev-spring2025/builds/breakout-final
-```
-
-If you need help getting your project on github, please refer to [these instructions](./setup.html). Most importantly, make sure to add the `.gitignore` file to your Unity project (if you are uploading your Unity project).
