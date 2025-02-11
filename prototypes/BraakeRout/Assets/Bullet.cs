@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     Vector3 direction;
     Rigidbody rb;
     Renderer bulletRender;
-    Color safeColor = Color.white;
+    Color safeColor = new Color(1, 0.3592149f, 0);
     Color deadColor = Color.black;
     bool wall = false;
     public Coroutine waitCoroutine;

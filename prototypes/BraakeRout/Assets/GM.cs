@@ -22,6 +22,9 @@ public class GM : MonoBehaviour
     float timer = 0f;
     bool countingTimer;
 
+    public GameObject StartPanel;
+
+
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -40,10 +43,8 @@ public class GM : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Time.timeScale = 1.0f;
-        timer = 0f;
-        countingTimer = true;
+        Time.timeScale = 0f;
+        StartPanel.SetActive(true);
 
     }
 
@@ -94,6 +95,16 @@ public class GM : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void gameStart() {
+        StartPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1.0f;
+        timer = 0f;
+        countingTimer = true;
+
+    }
+
 
 
 }

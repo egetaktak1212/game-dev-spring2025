@@ -10,7 +10,7 @@ public class ItemHandler : MonoBehaviour
     public Dictionary<string, bool> actionState = new Dictionary<string, bool>
     {
     {"Racket", true},
-    {"Gun", false}, 
+    {"Gun", true}, 
     {"Magnet", false}
     };
 
@@ -31,25 +31,23 @@ public class ItemHandler : MonoBehaviour
 
     void HandleInputs()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetKey(KeyCode.Space))
         {
-            switchToGun();
-        }
-        else if (Input.GetKey(KeyCode.Space))
-        {
-            switchToMagnet();
+            actionState["Magnet"] = true;
+            actionState["Gun"] = false;
+            actionState["Racket"] = false;
+            hitBox.enabled = false;
         }
         else
         {
-            switchToRacket();
+            hitBox.enabled = true;
+            actionState["Magnet"] = false;
+            actionState["Gun"] = true;
+            actionState["Racket"] = true;
         }
     }
 
-    void switchToGun() {
-        SwitchTo("Gun");
-        hitBox.enabled = false;
-        //code here for what needs to happen
-    }
+
 
     void switchToRacket() {
         SwitchTo("Racket");
