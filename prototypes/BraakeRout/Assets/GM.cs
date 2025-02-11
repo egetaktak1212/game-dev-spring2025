@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +25,8 @@ public class GM : MonoBehaviour
 
     public GameObject StartPanel;
 
+    public GameObject TimerText;
+
 
     // Start is called before the first frame update
     private void OnEnable()
@@ -45,6 +48,7 @@ public class GM : MonoBehaviour
     {
         Time.timeScale = 0f;
         StartPanel.SetActive(true);
+        TimerText.SetActive(false);
 
     }
 
@@ -56,7 +60,11 @@ public class GM : MonoBehaviour
         {
             timer += Time.deltaTime;
         }
-        Debug.Log(timer);
+
+        int minutes = Mathf.FloorToInt(timer / 60);
+        int seconds = Mathf.FloorToInt(timer % 60);
+        string time = string.Format("{0:00}:{1:00}", minutes, seconds);
+        TimerText.GetComponent<TextMeshProUGUI>().text = time;
     }
 
     public void bigMode() { 
@@ -75,6 +83,7 @@ public class GM : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Debug.Log(timer);
+
    
     }
 
@@ -102,6 +111,7 @@ public class GM : MonoBehaviour
         Time.timeScale = 1.0f;
         timer = 0f;
         countingTimer = true;
+        TimerText.SetActive(true);
 
     }
 
