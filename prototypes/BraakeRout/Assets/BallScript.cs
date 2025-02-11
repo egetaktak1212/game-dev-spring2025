@@ -106,11 +106,6 @@ public class BallScript : MonoBehaviour
             }
             superCoroutine = StartCoroutine(SuperBallDuration());
         }
-        else {
-            //StopCoroutine(superCoroutine);
-            //StartCoroutine(SuperBallDuration());
-        
-        }
     }
 
     public void leaveSuperBall()

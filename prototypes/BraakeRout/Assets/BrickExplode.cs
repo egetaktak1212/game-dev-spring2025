@@ -13,10 +13,18 @@ public class BrickExplode : MonoBehaviour
 
     public Material mat;
 
-    
+    public int layerNum = 0;
+
+    List<Color> layerColors = new List<Color>
+{
+    new Color(1f, 0.992f, 0.588f),
+    new Color(1f, 0.788f, 0.067f), 
+    new Color(1f, 0.467f, 0.09f),
+    new Color(1, 0.306f, 0.094f)
+};
 
 
-    Color superColor = Color.yellow;
+    Color superColor = Color.green;
 
     // Start is called before the first frame update
 
@@ -29,9 +37,21 @@ public class BrickExplode : MonoBehaviour
 
     void Start()
     {
-        if (superBall) { 
-            gameObject.GetComponent<Renderer>().material = mat;
+        gameObject.GetComponent<Renderer>().material = mat;
+
+        Color brickColor = layerColors[layerNum];
+
+
+        if (superBall)
+        {
+
             gameObject.GetComponent<Renderer>().material.color = superColor;
+            gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", superColor);
+        }
+        else
+        {
+            gameObject.GetComponent<Renderer>().material.color = brickColor;
+            gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", brickColor);
         }
     }
 

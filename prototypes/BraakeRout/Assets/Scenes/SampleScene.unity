@@ -244,6 +244,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &85251589
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +367,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &87588015
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +490,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &110440883
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +613,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &116460828
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,6 +736,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &135538271
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,6 +995,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &154859429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1118,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &161945972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,6 +1241,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &220777848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,6 +1364,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &259380963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1487,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &265398453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1600,6 +1610,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &265681522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,6 +1838,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &371342238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,6 +1961,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &392206411
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,6 +2084,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &483313338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,6 +2207,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &492676970
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,6 +2330,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &493540678
 GameObject:
   m_ObjectHideFlags: 0
@@ -2437,6 +2453,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &509362620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,6 +2576,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &520366361
 GameObject:
   m_ObjectHideFlags: 0
@@ -2681,6 +2699,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &527927951
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,6 +2822,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &530814232
 GameObject:
   m_ObjectHideFlags: 0
@@ -2925,6 +2945,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &560015962
 GameObject:
   m_ObjectHideFlags: 0
@@ -3047,6 +3068,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &582210331
 GameObject:
   m_ObjectHideFlags: 0
@@ -3169,6 +3191,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3385,6 +3408,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &727186642
 GameObject:
   m_ObjectHideFlags: 0
@@ -3612,6 +3636,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &938050501
 GameObject:
   m_ObjectHideFlags: 0
@@ -3734,6 +3759,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &938086141
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,6 +3993,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &959626244
 GameObject:
   m_ObjectHideFlags: 0
@@ -4089,6 +4116,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &981414363
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,6 +4239,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &985690400
 GameObject:
   m_ObjectHideFlags: 0
@@ -4333,6 +4362,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &996631624
 GameObject:
   m_ObjectHideFlags: 0
@@ -7652,6 +7682,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1006960612
 GameObject:
   m_ObjectHideFlags: 0
@@ -7774,6 +7805,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1061701863
 GameObject:
   m_ObjectHideFlags: 0
@@ -7896,6 +7928,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1082464781
 GameObject:
   m_ObjectHideFlags: 0
@@ -8018,6 +8051,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1083128396
 GameObject:
   m_ObjectHideFlags: 0
@@ -8140,6 +8174,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1107630938
 GameObject:
   m_ObjectHideFlags: 0
@@ -8262,6 +8297,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1137993439
 GameObject:
   m_ObjectHideFlags: 0
@@ -8623,6 +8659,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1185707360
 GameObject:
   m_ObjectHideFlags: 0
@@ -8745,6 +8782,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1195098468
 GameObject:
   m_ObjectHideFlags: 0
@@ -10915,6 +10953,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1221330919
 GameObject:
   m_ObjectHideFlags: 0
@@ -11037,6 +11076,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1231949478
 GameObject:
   m_ObjectHideFlags: 0
@@ -11159,6 +11199,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1251730689
 GameObject:
   m_ObjectHideFlags: 0
@@ -11281,6 +11322,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &1271921108
 GameObject:
   m_ObjectHideFlags: 0
@@ -11620,6 +11662,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &1294315431
 GameObject:
   m_ObjectHideFlags: 0
@@ -11878,6 +11921,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1355912854
 GameObject:
   m_ObjectHideFlags: 0
@@ -12000,6 +12044,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1358193916
 GameObject:
   m_ObjectHideFlags: 0
@@ -12122,6 +12167,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &1360236097
 GameObject:
   m_ObjectHideFlags: 0
@@ -12244,6 +12290,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1373940701
 GameObject:
   m_ObjectHideFlags: 0
@@ -12366,6 +12413,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1397327678
 GameObject:
   m_ObjectHideFlags: 0
@@ -12488,6 +12536,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1417117569
 GameObject:
   m_ObjectHideFlags: 0
@@ -13013,6 +13062,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1444631257
 GameObject:
   m_ObjectHideFlags: 0
@@ -13343,6 +13393,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1475453343
 GameObject:
   m_ObjectHideFlags: 0
@@ -13570,6 +13621,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1525211603
 GameObject:
   m_ObjectHideFlags: 0
@@ -13692,6 +13744,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1597537542
 GameObject:
   m_ObjectHideFlags: 0
@@ -13919,6 +13972,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1615252876
 GameObject:
   m_ObjectHideFlags: 0
@@ -14041,6 +14095,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &1632756976
 GameObject:
   m_ObjectHideFlags: 0
@@ -14163,6 +14218,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &1680355114
 GameObject:
   m_ObjectHideFlags: 0
@@ -14928,6 +14984,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &1738729925
 GameObject:
   m_ObjectHideFlags: 0
@@ -15050,6 +15107,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1744439425
 GameObject:
   m_ObjectHideFlags: 0
@@ -16141,6 +16199,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1763627519
 GameObject:
   m_ObjectHideFlags: 0
@@ -16263,6 +16322,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1769188896
 GameObject:
   m_ObjectHideFlags: 0
@@ -16385,6 +16445,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1782429897
 GameObject:
   m_ObjectHideFlags: 0
@@ -16507,6 +16568,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1804097641
 GameObject:
   m_ObjectHideFlags: 0
@@ -16629,6 +16691,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1847502117
 GameObject:
   m_ObjectHideFlags: 0
@@ -16751,6 +16814,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1858101600
 GameObject:
   m_ObjectHideFlags: 0
@@ -16873,6 +16937,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1867392716
 GameObject:
   m_ObjectHideFlags: 0
@@ -16995,6 +17060,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!43 &1900963638
 Mesh:
   m_ObjectHideFlags: 0
@@ -17418,6 +17484,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1936655705
 GameObject:
   m_ObjectHideFlags: 0
@@ -17540,6 +17607,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &1938830782
 GameObject:
   m_ObjectHideFlags: 0
@@ -17739,6 +17807,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &1956562632
 GameObject:
   m_ObjectHideFlags: 0
@@ -17861,6 +17930,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &1966161512
 GameObject:
   m_ObjectHideFlags: 0
@@ -17983,6 +18053,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1980550096
 GameObject:
   m_ObjectHideFlags: 0
@@ -18105,6 +18176,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!1 &1983738863
 GameObject:
   m_ObjectHideFlags: 0
@@ -18494,6 +18566,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &2001075620
 GameObject:
   m_ObjectHideFlags: 0
@@ -18616,6 +18689,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &2016500498
 GameObject:
   m_ObjectHideFlags: 0
@@ -18738,6 +18812,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 2
 --- !u!43 &2020091253
 Mesh:
   m_ObjectHideFlags: 0
@@ -19102,6 +19177,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!850595691 &2041018803
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -19288,6 +19364,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!43 &2063108066
 Mesh:
   m_ObjectHideFlags: 0
@@ -19575,6 +19652,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 1
 --- !u!1 &2075893122
 GameObject:
   m_ObjectHideFlags: 0
@@ -19802,6 +19880,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 3
 --- !u!1 &2093293079
 GameObject:
   m_ObjectHideFlags: 0
@@ -19863,7 +19942,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19924,6 +20003,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4799991627002448597, guid: 86e8e23a41f91f347b2a910b327f6fbf, type: 3}
   powerUp: {fileID: 4480727584306361997, guid: 3342494a7af0ba64ead00dc522ad23da, type: 3}
   mat: {fileID: 2100000, guid: ba3afde764d3c5a4ea0ca4b2e906fcaa, type: 2}
+  layerNum: 0
 --- !u!1 &2141149846
 GameObject:
   m_ObjectHideFlags: 0
@@ -20575,6 +20655,7 @@ GameObject:
   - component: {fileID: 4995116444424793240}
   - component: {fileID: 4995116444424793241}
   - component: {fileID: 4939760431847100551}
+  - component: {fileID: 4995116444424793248}
   m_Layer: 7
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -20598,6 +20679,23 @@ Transform:
   - {fileID: 265681523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4995116444424793248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4995116444424793242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 0}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &5388720605400001731
 GameObject:
   m_ObjectHideFlags: 0
