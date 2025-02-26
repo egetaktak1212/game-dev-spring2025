@@ -19,26 +19,29 @@ public class PlayerControls : MonoBehaviour
      * - if you jump right at the end of a dash, youll do a super jump. so, you can use this to reach further areas. its like mario dive yfeel me
      * 
      * THINGS I WANT:
-     * - make the super jump be possible when you press right before dash ends. u can use the dash timer.
+     * - DONE - make the super jump be possible when you press right before dash ends. u can use the dash timer.
      * - lock left and right rotation when doing super jump, so, find the direction of the last frame and just go in that direction while falling too
      * - clean this code up. single responsibility principle and allat
-     * - if you jump during a dash, it cancels the dash. this is so you cant just spam the super jump
-     * - make the super jump rise less than normal but last longer yfeel me
+     * - DONE - if you jump during a dash, it cancels the dash. this is so you cant just spam the super jump
+     * - DONE - make the super jump rise less than normal but last longer yfeel me
      * - make something under the guy so you can see where youd land
-     * - make a trail that lets u know when the dash jump thing is
+     * - DONE - make a trail that lets u know when the dash jump thing is
      */
 
 
     Vector2 moveInput;
     InputAction jumpAction;
     InputAction dash;
-    
-    
+
+    public TrailRenderer dashTrail;
 
     public CharacterController cc;
     public Transform cameraTransform;
     public cameraFollow cameraFollow;
+    public GameObject shadowObj;
+    public float shadowDistance = 10f;
 
+    bool isDashJumpRunning = false;
 
 
     public bool isMoving = false;
@@ -90,6 +93,8 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
 
+        dashTrail.emitting = false;
+
         float timeToApex = maxJumpTime / 2;
         gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
         jumpVelocity = (2 * maxJumpHeight) / timeToApex;
@@ -105,7 +110,8 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        PlaceShadowUnder();
+        Debug.Log(isDashJumpRunning + " " + doDashJump + " " + doingDashJump);
 
         recoverH = true;
         timeH -= Time.deltaTime;
@@ -116,15 +122,18 @@ public class PlayerControls : MonoBehaviour
         moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
         float hAxis = moveInput.x;
         float vAxis = moveInput.y;
-        
 
-
-        if (dashTimer == 0 /*|| (isDashing && Input.GetKeyUp(KeyCode.LeftShift))*/)
-        {
-            if (isDashing) {
+        if (dashTimer <= 0.1f && isDashing && dashTimer > 0) {
+            if (!isDashJumpRunning)
+            {
+                isDashJumpRunning = true;
                 StartCoroutine(dashJumpWindow());
                 movementLocked = false;
             }
+        }
+
+        if (dashTimer == 0 /*|| (isDashing && Input.GetKeyUp(KeyCode.LeftShift))*/)
+        {
             isDashing = false;
             dashVelocity = 0;
         }
@@ -138,6 +147,7 @@ public class PlayerControls : MonoBehaviour
             {
                 dashedThisTurn = true;
             }
+            dashTrail.emitting = true;
             movementLocked = true;
             isDashing = true;
             dashVelocity = dashAmount;
@@ -157,13 +167,22 @@ public class PlayerControls : MonoBehaviour
 
         if (!cc.isGrounded)
         {
+
             //Debug.Log("in the air for some reason");
 
             // *** If we are in here, we are IN THE AIR ***
 
             otherfalltime += Time.deltaTime;
-            if (!isDashing && jumpAction.WasPressedThisFrame() && !doDashJump && jumpCount < maxJumps)
+            if (jumpAction.WasPressedThisFrame() && !doDashJump && jumpCount < maxJumps)
             {
+                if (isDashing) {
+                    dashTimer = 0;
+                    if (!doingDashJump && !doDashJump && !isDashJumpRunning)
+                    {
+                        dashTrail.material.color = Color.white;
+                        dashTrail.emitting = false;
+                    }
+                }
                 cameraFollow.jumpedInAir();
                 yVelocity = jumpVelocity;
                 jumpCount++;
@@ -209,12 +228,20 @@ public class PlayerControls : MonoBehaviour
         }
         else if (cc.isGrounded)
         {
+            //RidOfShadow();
+
             if (doingDashJump) {
                 moveSpeed = moveSpeed / moveSpeedCoefficient;
                 doingDashJump = false;
                 gravity = gravity * gravityCoefficient;
                 jumpVelocity *= jumpVelocityCoefficient;
+                dashTrail.material.color = Color.white;
+                dashTrail.emitting = false;
             }
+            //if (!isDashing && isDashJumpRunning) {
+            //    dashTrail.material.color = Color.white;
+            //    //dashTrail.emitting = false;
+            //}
             
             otherfalltime = 0f;
             dashCount = 0;
@@ -242,16 +269,23 @@ public class PlayerControls : MonoBehaviour
             fallingTime = 0;
 
             // Jump!
-            if (!isDashing)
+
+            if (jumpAction.WasPressedThisFrame() && !doDashJump)
             {
-                if (jumpAction.WasPressedThisFrame() && !doDashJump)
+                if (isDashing)
                 {
-                    cameraFollow.jumped();
-                    groundDashCount = 0;
-                    jumpCount++;
-                    yVelocity = jumpVelocity;
+                    dashTimer = 0;
+                    if (!doingDashJump && !doDashJump && !isDashJumpRunning) {
+                        dashTrail.material.color = Color.white;
+                        dashTrail.emitting = false;
+                    }
                 }
+                cameraFollow.jumped();
+                groundDashCount = 0;
+                jumpCount++;
+                yVelocity = jumpVelocity;
             }
+            
 
         }
 
@@ -329,21 +363,25 @@ public class PlayerControls : MonoBehaviour
 
     IEnumerator dashJumpWindow() {
         float timeElapsed = 0f;
-
+        dashTrail.material.color = Color.red;
         while (timeElapsed < 0.2f)
         {
             if (jumpAction.WasPressedThisFrame())
             {
 
                 doDashJump = true;
-
+                dashTimer = 0;
+                dashVelocity = 0f;
+                isDashJumpRunning = false;
                 yield break; 
             }
 
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-
+        dashTrail.material.color = Color.white;
+        dashTrail.emitting = false;
+        isDashJumpRunning = false;
     }
   
     IEnumerator DisableDash()
@@ -354,6 +392,29 @@ public class PlayerControls : MonoBehaviour
         groundDashCount = 0;
     }
 
+    void PlaceShadowUnder()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, shadowDistance))
+        {
+            shadowObj.gameObject.SetActive(true);
+
+
+            float distance = Vector3.Distance(transform.position, hit.point);
+            float sizePercentage = 1 - (distance / shadowDistance);
+            shadowObj.transform.localScale = new Vector3(sizePercentage, sizePercentage, sizePercentage);
+            shadowObj.transform.position = hit.point;
+        }
+        else {
+            shadowObj.gameObject.SetActive(false);
+        }
+    }
+
+    void RidOfShadow() { 
+        shadowObj.gameObject.SetActive(false);
+    }
 
 
 }
