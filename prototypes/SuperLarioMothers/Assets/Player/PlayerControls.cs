@@ -1,0 +1,359 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using static PlayerControls;
+
+
+public class PlayerControls : MonoBehaviour
+{
+
+    /*
+     * THINGS I HAVE RIGHT NOW:
+     * 
+     * - Dash (cooldown on floor, one time when air)
+     * - Double jump
+     * - Jump Buffer
+     * - Coyote Time
+     * - Cam follows when you land (and some other conditions, its in cameraFollow.cs
+     * - if you jump right at the end of a dash, youll do a super jump. so, you can use this to reach further areas. its like mario dive yfeel me
+     * 
+     * THINGS I WANT:
+     * - make the super jump be possible when you press right before dash ends. u can use the dash timer.
+     * - lock left and right rotation when doing super jump, so, find the direction of the last frame and just go in that direction while falling too
+     * - clean this code up. single responsibility principle and allat
+     * - if you jump during a dash, it cancels the dash. this is so you cant just spam the super jump
+     * - make the super jump rise less than normal but last longer yfeel me
+     * - make something under the guy so you can see where youd land
+     * - make a trail that lets u know when the dash jump thing is
+     */
+
+
+    Vector2 moveInput;
+    InputAction jumpAction;
+    InputAction dash;
+    
+    
+
+    public CharacterController cc;
+    public Transform cameraTransform;
+    public cameraFollow cameraFollow;
+
+
+
+    public bool isMoving = false;
+
+    float timeH = 0f;
+    public bool recoverH = true;
+
+    public float moveSpeed = 13f;
+    float jumpVelocity;
+
+    float yVelocity = 0;
+    float gravity;
+
+    //if you press jump before u land, it'll make u jump when u touch ground
+    float fallingTime = 0;
+
+    float maxJumpTime = .60f;
+    float maxJumpHeight = 3.0f;
+    bool calcFallTime = false;
+    float otherfalltime = 0f;
+
+    int jumpCount = 0;
+
+    //dash
+    float dashAmount = 16;
+    float dashVelocity = 0;
+    float dashTimer = 0;
+    float dashLength = .3f;
+    int dashCount = 0;
+    int groundDashCount = 0;
+    bool isDashing = false;
+    bool canDash = true;
+    public int maxDashes = 1;
+    public int maxJumps = 2;
+
+    bool movementLocked = false;
+    bool doDashJump = false;
+    bool doingDashJump = false;
+    public float moveSpeedCoefficient = 2f;
+    public float gravityCoefficient = 3f;
+    public float jumpVelocityCoefficient = 1.5f;
+
+    private void OnEnable()
+    {
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+        float timeToApex = maxJumpTime / 2;
+        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        jumpVelocity = (2 * maxJumpHeight) / timeToApex;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        //SwitchCamera(CameraStyle.Open);
+
+        jumpAction = InputSystem.actions.FindAction("Jump");
+        dash = InputSystem.actions.FindAction("Dash");
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+
+        recoverH = true;
+        timeH -= Time.deltaTime;
+
+        bool dashedThisTurn = false;
+
+
+        moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
+        float hAxis = moveInput.x;
+        float vAxis = moveInput.y;
+        
+
+
+        if (dashTimer == 0 /*|| (isDashing && Input.GetKeyUp(KeyCode.LeftShift))*/)
+        {
+            if (isDashing) {
+                StartCoroutine(dashJumpWindow());
+                movementLocked = false;
+            }
+            isDashing = false;
+            dashVelocity = 0;
+        }
+        if (dash.WasPressedThisFrame() && !isDashing && dashCount < maxDashes && groundDashCount < maxDashes && canDash)
+        {
+            if (maxDashes != 2)
+            {
+                dashedThisTurn = true;
+            }
+            else if (groundDashCount == 1)
+            {
+                dashedThisTurn = true;
+            }
+            movementLocked = true;
+            isDashing = true;
+            dashVelocity = dashAmount;
+            yVelocity = 0;
+            dashTimer = dashLength;
+            if (cc.isGrounded)
+            {
+                groundDashCount++;
+            }
+            else
+            {
+                dashCount++;
+            }
+        }
+        dashTimer -= Time.deltaTime;
+        dashTimer = Mathf.Clamp(dashTimer, 0, 10000);
+
+        if (!cc.isGrounded)
+        {
+            //Debug.Log("in the air for some reason");
+
+            // *** If we are in here, we are IN THE AIR ***
+
+            otherfalltime += Time.deltaTime;
+            if (!isDashing && jumpAction.WasPressedThisFrame() && !doDashJump && jumpCount < maxJumps)
+            {
+                cameraFollow.jumpedInAir();
+                yVelocity = jumpVelocity;
+                jumpCount++;
+            }
+
+
+            //coyote time
+            if (otherfalltime < .25f && !isDashing && jumpCount == 0 && !doDashJump && (jumpAction.WasPressedThisFrame()))
+            {
+                yVelocity = jumpVelocity;
+                jumpCount++;
+            }
+
+            //start jump buffer
+            if (jumpAction.WasPressedThisFrame() && !doDashJump && yVelocity < 0.0f && !isDashing)  
+            {
+
+                calcFallTime = true;
+            }
+
+            if (calcFallTime)
+            {
+
+                fallingTime += Time.deltaTime;
+
+            }
+
+            if (!isDashing)
+            {
+                if (yVelocity > 0.0f)
+                {
+                    yVelocity += gravity * Time.deltaTime;
+                }
+                else if (yVelocity <= 0.0f)
+                {
+                    yVelocity += gravity * 2.0f * Time.deltaTime;
+                }
+            }
+
+            //if (Input.GetKeyUp(KeyCode.Space) && yVelocity > 0) { yVelocity = 0.0f; }
+
+
+        }
+        else if (cc.isGrounded)
+        {
+            if (doingDashJump) {
+                moveSpeed = moveSpeed / moveSpeedCoefficient;
+                doingDashJump = false;
+                gravity = gravity * gravityCoefficient;
+                jumpVelocity *= jumpVelocityCoefficient;
+            }
+            
+            otherfalltime = 0f;
+            dashCount = 0;
+
+
+            yVelocity = -2;
+
+            cameraFollow.landed();
+
+            jumpCount = 0;
+
+            //this is to add a delay when trying to dash on the ground
+            if (dashedThisTurn)
+            {
+                StartCoroutine(DisableDash());
+            }
+
+
+            if ((fallingTime < .2f) && calcFallTime)
+            {
+                jumpCount++;
+                yVelocity = jumpVelocity;
+            }
+            calcFallTime = false;
+            fallingTime = 0;
+
+            // Jump!
+            if (!isDashing)
+            {
+                if (jumpAction.WasPressedThisFrame() && !doDashJump)
+                {
+                    cameraFollow.jumped();
+                    groundDashCount = 0;
+                    jumpCount++;
+                    yVelocity = jumpVelocity;
+                }
+            }
+
+        }
+
+        if (doDashJump) {
+            jumpVelocity = jumpVelocity/jumpVelocityCoefficient;
+            yVelocity = jumpVelocity;
+            movementLocked = true;
+            moveSpeed = moveSpeed * moveSpeedCoefficient;
+            doDashJump = false;
+            doingDashJump = true;
+            gravity = gravity / gravityCoefficient;
+            dashCount = maxDashes;
+        }
+
+
+
+
+        Vector3 amountToMove = new Vector3(hAxis, 0, vAxis) * moveSpeed;
+
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
+
+        Vector3 forwardRelative = amountToMove.z * camForward;
+        Vector3 rightRelative = amountToMove.x * camRight;
+
+        Vector3 moveDir = forwardRelative + rightRelative;
+
+        amountToMove = new Vector3(moveDir.x, 0, moveDir.z);
+
+        if (amountToMove != Vector3.zero)
+        {
+            amountToMove += amountToMove.normalized * dashVelocity;
+        }
+        else
+        {
+            amountToMove += transform.forward * dashVelocity;
+        }
+        if (!isDashing)
+        {
+            amountToMove.y += yVelocity;
+
+
+        }
+
+        amountToMove *= Time.deltaTime;
+
+        isMoving = amountToMove != Vector3.zero;
+
+
+
+        //animator.SetBool("IsRunning", hAxis != 0 || vAxis != 0);
+        //animator.SetBool("IsIdle", hAxis == 0 && vAxis == 0);
+        //bool a = animator.GetBool("IsIdle");
+        //bool b = animator.GetBool("IsRunning");
+
+        if (true /*!movementLocked*/)
+        {
+            cc.Move(amountToMove);
+        }
+
+
+        Vector3 rotate = amountToMove;
+        rotate.y = 0;
+        if (rotate != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotate.normalized), 5f * Time.deltaTime);
+        }
+
+    }
+
+    IEnumerator dashJumpWindow() {
+        float timeElapsed = 0f;
+
+        while (timeElapsed < 0.2f)
+        {
+            if (jumpAction.WasPressedThisFrame())
+            {
+
+                doDashJump = true;
+
+                yield break; 
+            }
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+    }
+  
+    IEnumerator DisableDash()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(0.5f);
+        canDash = true;
+        groundDashCount = 0;
+    }
+
+
+
+}
