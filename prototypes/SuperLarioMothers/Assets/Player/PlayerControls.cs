@@ -20,11 +20,10 @@ public class PlayerControls : MonoBehaviour
      * 
      * THINGS I WANT:
      * - DONE - make the super jump be possible when you press right before dash ends. u can use the dash timer.
-     * - lock left and right rotation when doing super jump, so, find the direction of the last frame and just go in that direction while falling too
      * - clean this code up. single responsibility principle and allat
      * - DONE - if you jump during a dash, it cancels the dash. this is so you cant just spam the super jump
-     * - DONE - make the super jump rise less than normal but last longer yfeel me
-     * - make something under the guy so you can see where youd land
+     * - DONE - make the super jump rise more than normal but move slower yfeel me
+     * - DONE make something under the guy so you can see where youd land
      * - DONE - make a trail that lets u know when the dash jump thing is
      */
 
@@ -74,15 +73,18 @@ public class PlayerControls : MonoBehaviour
     int groundDashCount = 0;
     bool isDashing = false;
     bool canDash = true;
-    public int maxDashes = 1;
-    public int maxJumps = 2;
+    int maxDashes = 1;
+    int maxJumps = 1;
 
     bool movementLocked = false;
     bool doDashJump = false;
     bool doingDashJump = false;
-    public float moveSpeedCoefficient = 2f;
-    public float gravityCoefficient = 3f;
-    public float jumpVelocityCoefficient = 1.5f;
+    float moveSpeedCoefficient = 0.8f;
+    float gravityCoefficient = 1f;
+    float jumpVelocityCoefficient = 0.7f;
+
+    bool dashPickedUp = false;
+
 
     private void OnEnable()
     {
@@ -111,7 +113,6 @@ public class PlayerControls : MonoBehaviour
     void Update()
     {
         PlaceShadowUnder();
-        Debug.Log(isDashJumpRunning + " " + doDashJump + " " + doingDashJump);
 
         recoverH = true;
         timeH -= Time.deltaTime;
@@ -123,7 +124,7 @@ public class PlayerControls : MonoBehaviour
         float hAxis = moveInput.x;
         float vAxis = moveInput.y;
 
-        if (dashTimer <= 0.1f && isDashing && dashTimer > 0) {
+        if (dashTimer <= 0.1f && isDashing && dashTimer > 0 && dashPickedUp) {
             if (!isDashJumpRunning)
             {
                 isDashJumpRunning = true;
@@ -136,6 +137,10 @@ public class PlayerControls : MonoBehaviour
         {
             isDashing = false;
             dashVelocity = 0;
+            if (!dashPickedUp) {
+                dashTrail.material.color = Color.white;
+                dashTrail.emitting = false;
+            }
         }
         if (dash.WasPressedThisFrame() && !isDashing && dashCount < maxDashes && groundDashCount < maxDashes && canDash)
         {
@@ -230,19 +235,12 @@ public class PlayerControls : MonoBehaviour
         {
             //RidOfShadow();
 
-            if (doingDashJump) {
-                moveSpeed = moveSpeed / moveSpeedCoefficient;
-                doingDashJump = false;
-                gravity = gravity * gravityCoefficient;
-                jumpVelocity *= jumpVelocityCoefficient;
-                dashTrail.material.color = Color.white;
-                dashTrail.emitting = false;
-            }
+            finishDashJump();
             //if (!isDashing && isDashJumpRunning) {
             //    dashTrail.material.color = Color.white;
             //    //dashTrail.emitting = false;
             //}
-            
+
             otherfalltime = 0f;
             dashCount = 0;
 
@@ -289,16 +287,7 @@ public class PlayerControls : MonoBehaviour
 
         }
 
-        if (doDashJump) {
-            jumpVelocity = jumpVelocity/jumpVelocityCoefficient;
-            yVelocity = jumpVelocity;
-            movementLocked = true;
-            moveSpeed = moveSpeed * moveSpeedCoefficient;
-            doDashJump = false;
-            doingDashJump = true;
-            gravity = gravity / gravityCoefficient;
-            dashCount = maxDashes;
-        }
+        DashJump();
 
 
 
@@ -361,6 +350,35 @@ public class PlayerControls : MonoBehaviour
 
     }
 
+
+    void finishDashJump() {
+        if (doingDashJump)
+        {
+            moveSpeed = moveSpeed / moveSpeedCoefficient;
+            doingDashJump = false;
+            gravity = gravity * gravityCoefficient;
+            jumpVelocity *= jumpVelocityCoefficient;
+            dashTrail.material.color = Color.white;
+            dashTrail.emitting = false;
+        }
+    }
+
+    void DashJump() {
+        if (doDashJump)
+        {
+            cameraFollow.jumpedInAir();
+            jumpVelocity = jumpVelocity / jumpVelocityCoefficient;
+            yVelocity = jumpVelocity;
+            movementLocked = true;
+            moveSpeed = moveSpeed * moveSpeedCoefficient;
+            doDashJump = false;
+            doingDashJump = true;
+            gravity = gravity / gravityCoefficient;
+            dashCount = maxDashes;
+        }
+    }
+
+
     IEnumerator dashJumpWindow() {
         float timeElapsed = 0f;
         dashTrail.material.color = Color.red;
@@ -416,5 +434,30 @@ public class PlayerControls : MonoBehaviour
         shadowObj.gameObject.SetActive(false);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("DashPickup"))
+        {
+            dashPickedUp = true;
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("JumpPickup")) {
+            maxJumps = 2;
+            Destroy(other.gameObject);
+        }
+       
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(hit.transform);
+        }
+        else
+        {
+            transform.SetParent(null);
+        }
+    }
 
 }
