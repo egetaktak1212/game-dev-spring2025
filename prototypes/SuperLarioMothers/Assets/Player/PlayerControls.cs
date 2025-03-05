@@ -85,6 +85,12 @@ public class PlayerControls : MonoBehaviour
 
     bool dashPickedUp = false;
 
+    GameObject movingPlatform;
+    Vector3 previousMovingPlatformPosition;
+
+    Vector3 currentCheckpoint;
+
+    bool dead = false;
 
     private void OnEnable()
     {
@@ -260,6 +266,7 @@ public class PlayerControls : MonoBehaviour
 
             if ((fallingTime < .2f) && calcFallTime)
             {
+                cameraFollow.jumped();
                 jumpCount++;
                 yVelocity = jumpVelocity;
             }
@@ -335,21 +342,80 @@ public class PlayerControls : MonoBehaviour
         //bool a = animator.GetBool("IsIdle");
         //bool b = animator.GetBool("IsRunning");
 
+        bool shouldRotate = true;
+        if (movingPlatform != null)
+        {
+            if (amountToMove.x == 0 && amountToMove.z == 0)
+            {
+                shouldRotate = false;
+            }
+            Vector3 amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
+            amountToMove += amountPlatformMoved;
+            previousMovingPlatformPosition = movingPlatform.transform.position;
+        }
+
+
+
+
+
+
+
         if (true /*!movementLocked*/)
         {
             cc.Move(amountToMove);
+
+            if (dead)
+            {
+                cc.enabled = false;
+                transform.position = currentCheckpoint;
+                dead = false;
+                cc.enabled = true;
+            }
+
         }
 
 
         Vector3 rotate = amountToMove;
         rotate.y = 0;
-        if (rotate != Vector3.zero)
+        if (rotate != Vector3.zero && shouldRotate)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotate.normalized), 5f * Time.deltaTime);
         }
 
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("A");
+        if (other.CompareTag("MovingPlatform"))
+        {
+            movingPlatform = other.gameObject;
+            previousMovingPlatformPosition = movingPlatform.transform.position;
+        }
+        if (other.CompareTag("DashPickup"))
+        {
+            dashPickedUp = true;
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("JumpPickup"))
+        {
+            maxJumps = 2;
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("Kill")) {
+            die();
+            Debug.Log("B");
+        }
+
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("MovingPlatform"))
+        {
+            movingPlatform = null;
+        }
+    }
 
     void finishDashJump() {
         if (doingDashJump)
@@ -434,30 +500,26 @@ public class PlayerControls : MonoBehaviour
         shadowObj.gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("DashPickup"))
-        {
-            dashPickedUp = true;
-            Destroy(other.gameObject);
-        }
-        else if (other.CompareTag("JumpPickup")) {
-            maxJumps = 2;
-            Destroy(other.gameObject);
-        }
-       
+    public void setCheckpoint(Vector3 point) {
+        currentCheckpoint = point;
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.CompareTag("MovingPlatform"))
-        {
-            transform.SetParent(hit.transform);
-        }
-        else
-        {
-            transform.SetParent(null);
-        }
+    public void die() {
+        dead = true;
     }
+
+
+
+    //void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    if (hit.gameObject.CompareTag("MovingPlatform"))
+    //    {
+    //        transform.SetParent(hit.transform);
+    //    }
+    //    else
+    //    {
+    //        transform.SetParent(null);
+    //    }
+    //}
 
 }

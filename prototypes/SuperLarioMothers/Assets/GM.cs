@@ -6,9 +6,14 @@ public class GM : MonoBehaviour
 {
     InputAction restart;
 
+    public GameObject originalCheckpoint;
+    public PlayerControls player;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        player.setCheckpoint(originalCheckpoint.transform.position);
+
         restart = InputSystem.actions.FindAction("Restart");
     }
 
