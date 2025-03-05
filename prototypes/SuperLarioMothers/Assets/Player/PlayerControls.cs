@@ -42,6 +42,7 @@ public class PlayerControls : MonoBehaviour
 
     bool isDashJumpRunning = false;
 
+    public int coins = 0;
 
     public bool isMoving = false;
 
@@ -386,7 +387,6 @@ public class PlayerControls : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("A");
         if (other.CompareTag("MovingPlatform"))
         {
             movingPlatform = other.gameObject;
@@ -397,14 +397,19 @@ public class PlayerControls : MonoBehaviour
             dashPickedUp = true;
             Destroy(other.gameObject);
         }
-        else if (other.CompareTag("JumpPickup"))
+        if (other.CompareTag("JumpPickup"))
         {
             maxJumps = 2;
             Destroy(other.gameObject);
         }
-        else if (other.CompareTag("Kill")) {
+        if (other.CompareTag("Kill"))
+        {
             die();
-            Debug.Log("B");
+        }
+        if (other.CompareTag("Collectible")) {
+            coins += 1;
+            Destroy(other.gameObject);
+        
         }
 
     }

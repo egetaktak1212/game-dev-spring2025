@@ -23,7 +23,6 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) {
-            Debug.Log("entered trigger");
             player.setCheckpoint(point.transform.position);
             triggerCollider.enabled = false;
         }

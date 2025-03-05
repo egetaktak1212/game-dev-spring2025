@@ -64,6 +64,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4169038484002568975}
   - component: {fileID: 2369770389429088651}
+  - component: {fileID: 6279862719374901279}
   m_Layer: 0
   m_Name: Pickup
   m_TagString: Untagged
@@ -141,3 +142,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6279862719374901279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6438910917102990876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be6e5c9ccde0a745bc9775663df79e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

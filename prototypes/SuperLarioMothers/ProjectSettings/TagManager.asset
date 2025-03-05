@@ -9,6 +9,8 @@ TagManager:
   - JumpPickup
   - MovingPlatform
   - Kill
+  - MainCinemachine
+  - Collectible
   layers:
   - Default
   - TransparentFX
