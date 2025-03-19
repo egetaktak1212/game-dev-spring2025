@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static PlayerControls;
@@ -39,6 +40,8 @@ public class PlayerControls : MonoBehaviour
     public cameraFollow cameraFollow;
     public GameObject shadowObj;
     public float shadowDistance = 10f;
+
+    public CinemachineBrain cameraBrain;
 
     bool isDashJumpRunning = false;
 
@@ -80,7 +83,7 @@ public class PlayerControls : MonoBehaviour
     bool movementLocked = false;
     bool doDashJump = false;
     bool doingDashJump = false;
-    float moveSpeedCoefficient = 0.8f;
+    float moveSpeedCoefficient = 1.3f;
     float gravityCoefficient = 1f;
     float jumpVelocityCoefficient = 0.7f;
 
@@ -368,7 +371,9 @@ public class PlayerControls : MonoBehaviour
             if (dead)
             {
                 cc.enabled = false;
+                cameraBrain.enabled = false;
                 transform.position = currentCheckpoint;
+                StartCoroutine(WaitForCam());
                 dead = false;
                 cc.enabled = true;
             }
@@ -472,7 +477,12 @@ public class PlayerControls : MonoBehaviour
         dashTrail.emitting = false;
         isDashJumpRunning = false;
     }
-  
+
+    IEnumerator WaitForCam() {
+        yield return new WaitForSeconds(0.5f);
+        cameraBrain.enabled = true;
+    }
+
     IEnumerator DisableDash()
     {
         canDash = false;

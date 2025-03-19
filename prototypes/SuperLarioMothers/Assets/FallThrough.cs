@@ -13,6 +13,9 @@ public class FallThrough : MonoBehaviour
     public float flashInterval = 0.2f;
     public float invisibleTime = 2f;
 
+    public float offset = 0f;
+
+
     void Start()
     {
         cubeRenderer = GetComponent<Renderer>();
@@ -26,7 +29,7 @@ public class FallThrough : MonoBehaviour
 
     IEnumerator FallThroughCycle()
     {
-        yield return new WaitForSeconds(Random.Range(0f, solidTime + flashDuration + invisibleTime));
+        yield return new WaitForSeconds(offset);
 
         while (true)
         {
