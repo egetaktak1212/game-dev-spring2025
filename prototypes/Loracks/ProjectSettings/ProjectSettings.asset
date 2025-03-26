@@ -931,11 +931,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: c2028ecd-3589-4262-829c-27b8bc923fed
+  cloudProjectId: 764d8657-81a1-4270-87ad-3ebd565759db
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: simulation 2025-03-05_14-56-03
-  organizationId: mike-treanor
+  projectName: Loracks
+  organizationId: egetaktak1212
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

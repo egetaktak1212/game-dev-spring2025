@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using System.Collections;
-using static UnityEditor.PlayerSettings;
+
 
 // Manages the grid of cells for the simulation.
 // Handles grid creation, cell updates, and provides utility functions for cell access.
