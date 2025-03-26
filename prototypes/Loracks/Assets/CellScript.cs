@@ -8,6 +8,7 @@ public class CellScript : MonoBehaviour
     // References to visual components
     [SerializeField] GameObject selectionPlane;
     [SerializeField] GameObject heightCube;
+    [SerializeField] TreeStateSwitcher treeScript;
     private Material heightCubeMaterial;
 
     // Cell state with property to update visuals when changed
@@ -15,6 +16,13 @@ public class CellScript : MonoBehaviour
 
     // Is the cell occupied by smth
     public bool occupied = false;
+
+
+
+    private void OnEnable()
+    {
+        _state.treeScript = treeScript;
+    }
 
 
     public CellState State
@@ -32,6 +40,8 @@ public class CellScript : MonoBehaviour
 
     void Start()
     {
+        
+
         // Cache the material for performance and initialize visuals
         heightCubeMaterial = heightCube.GetComponentInChildren<Renderer>().material;
         UpdateVisuals();
@@ -39,7 +49,13 @@ public class CellScript : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            State.debugTreeSwitcherUp();
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            State.debugTreeSwitcherDown();
+        }
     }
 
     public void Hover() {

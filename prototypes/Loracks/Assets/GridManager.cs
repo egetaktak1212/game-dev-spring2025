@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using System.Collections;
+using static UnityEditor.PlayerSettings;
 
 // Manages the grid of cells for the simulation.
 // Handles grid creation, cell updates, and provides utility functions for cell access.
@@ -104,15 +105,59 @@ public class GridManager : MonoBehaviour
             nextSimulationStepTimer = nextSimulationStepRate;
         }
 
+        if (Input.GetKeyDown(KeyCode.F)) { 
+            puttingDownFactory = !puttingDownFactory;
+        }
+
+
+
         // Handle mouse hover detection
         bool puttingDownAnything = puttingDownFactory /* or any other ones of the same bool */;
-        if (!puttingDownAnything) {
-            mouseHoverDetection();
+        if (!puttingDownAnything)
+        {
+            //mouseHoverDetection();
+            unhideTrees();
+            cleanCellsAfterPlacingStructure();
+        }
+        else {
+            hideTrees();
         }
         if (puttingDownFactory) {
             placeStructure("factory", 1, 2);
         }
     }
+
+
+    void hideTrees() {
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                grid[i,j].State.treeScript.temporarlyTurnOff();
+            }
+        }
+    }
+
+    void unhideTrees() {
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                grid[i, j].State.treeScript.temporarlyTurnOn();
+            }
+        }
+    }
+
+    void cleanCellsAfterPlacingStructure() {
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                grid[i, j].gameObject.GetComponentInChildren<Renderer>().material = defaultMaterial;
+            }
+        }
+    }
+
 
     void placeStructure(string structName, int sizeX, int sizeY) {
         int structureX = sizeX;
@@ -169,7 +214,7 @@ public class GridManager : MonoBehaviour
             {
                 if (cellsAreClear)
                 {
-                    handlePlacements(structName);
+                    handlePlacements(structName, currentHoverCell.State.x, currentHoverCell.State.y, surroundingCellsHover);
                 }
             }
             if (Input.GetMouseButtonDown(1))
@@ -179,18 +224,36 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    void handlePlacements(string structName) {
+    void handlePlacements(string structName, int x, int y, List<CellScript> grid) {
         if (structName == "factory") {
-            placeFactory();
+            placeFactory(x, y, grid);
             //add to a list of game objects too
         } //else every other structure i wanna add
 
-
+        for (int i = 0; i < grid.Count; i++)
+        {
+            grid[i].occupied = true;
+            grid[i].State.setTreeState(-1);
+        }
+        unhideTrees();
 
     }
 
-    void placeFactory() { 
-        
+    void placeFactory(int x, int y, List<CellScript> grid) {
+        Vector3 pos = new Vector3(x, 1, y);
+        GameObject factory = Instantiate(factoryPrefab, pos, Quaternion.identity);
+        factoryList.Add(factory);
+
+        //done putting down factory
+        puttingDownFactory = false;
+
+
+        //set the local variables of the factory
+        FactoryScript factoryScript = factory.GetComponent<FactoryScript>();
+        factoryScript.setGrid(grid);
+        factoryScript.centerX = x;
+        factoryScript.centerY = y;
+
     }
 
     void setOccupy(List<CellScript> cells, bool occupied) {
@@ -262,10 +325,10 @@ public class GridManager : MonoBehaviour
             currentHoverCell.Hover();
 
             if (Input.GetMouseButtonDown(0)) {
-                currentHoverCell.Clicked();
+                //currentHoverCell.Clicked();
             }
             if (Input.GetMouseButtonDown(1)) {
-                currentHoverCell.RightClicked();
+                //currentHoverCell.RightClicked();
             }
         }
     }
@@ -358,14 +421,21 @@ public class GridManager : MonoBehaviour
                 GameObject cell = Instantiate(cellPrefab, pos, Quaternion.identity);
                 CellScript cs = cell.GetComponent<CellScript>();
 
-                // Initialize cell state with Perlin noise for height variation
+                // Make the tree start at 100
+                
+
+
+
+              
                 cs.State.height = 1f;
                 cs.State.x = x;
                 cs.State.y = y;
                 
+
                 // Set cell size and parent
                 cell.transform.localScale = new Vector3(cellWidth, 1, cellHeight);
                 cell.transform.SetParent(transform);
+                cs.State.setTreeState(100);
                 
                 // Store reference in the grid array
                 grid[x,y] = cell.GetComponent<CellScript>();
