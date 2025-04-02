@@ -14,9 +14,9 @@ public class CellScript : MonoBehaviour
     // Cell state with property to update visuals when changed
     private CellState _state = new CellState();
 
-    // Is the cell occupied by smth
-    public bool occupied = false;
 
+    
+    
 
 
     private void OnEnable()
@@ -86,25 +86,39 @@ public class CellScript : MonoBehaviour
     {
         // Create a copy of the current state to modify
         CellState nextState = this.State.Clone();
-        // This is just an example
-        ApplyMountainSmoothing(nextState);
+
+        ApplyTreeGrowth(nextState);
 
         return nextState;
     }
 
-    void ApplyMountainSmoothing(CellState cellState) {
-        // Get all neighboring cells (excluding the current cell)
-        List<CellState> neighborStates = GridManager.Instance.GetCellStatesInRange(State.x,State.y,1,1);
-        
-        // Calculate the average height of all neighboring cells
-        float totalHeight = 0;
-        foreach (CellState neighborState in neighborStates) {
-            totalHeight += neighborState.height;
+    void ApplyTreeGrowth(CellState cellState) {
+
+        bool weCantGrow = State.occupied || State.being_harvested;
+
+        if (!weCantGrow)
+        {
+            // Get all neighboring cells (excluding the current cell)
+            List<CellState> neighborStates = GridManager.Instance.GetCellStatesInRange(State.x, State.y, 1, 1);
+
+            float amountToGrow = 0;
+
+            for (int i = 0; i < neighborStates.Count; i++)
+            {
+                if (neighborStates[i].treeState > -1)
+                {
+                    amountToGrow += neighborStates[i].treeState * 0.05f;
+                }
+            }
+
+            Debug.Log(amountToGrow);
+
+            State.treeState += amountToGrow;
+
+            
+
         }
         
-        // Set the next height to be the average of all neighbors
-        // This creates a smoothing/diffusion effect across the grid
-        cellState.height = totalHeight / neighborStates.Count;
     }
 
     // Updates the visual representation of the cell based on its state

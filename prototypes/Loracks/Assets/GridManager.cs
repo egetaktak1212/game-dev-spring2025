@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using System.Collections;
+using TreeEditor;
+using Unity.VisualScripting;
 
 
 // Manages the grid of cells for the simulation.
@@ -51,7 +53,7 @@ public class GridManager : MonoBehaviour
     float nextSimulationStepRate = 0.25f;
 
     // Are we trying to put down an object
-    bool puttingDownFactory = true;
+    bool puttingDownFactory = false;
 
     List<GameObject> factoryList = new List<GameObject>();
     /*
@@ -101,11 +103,11 @@ public class GridManager : MonoBehaviour
         nextSimulationStepTimer -= Time.deltaTime;
         if (nextSimulationStepTimer < 0)
         {
-            //SimulationStep();
+            SimulationStep();
             nextSimulationStepTimer = nextSimulationStepRate;
         }
 
-        if (Input.GetKeyDown(KeyCode.F)) { 
+        if (Input.GetKeyDown(KeyCode.F)) {
             puttingDownFactory = !puttingDownFactory;
         }
 
@@ -125,6 +127,7 @@ public class GridManager : MonoBehaviour
         if (puttingDownFactory) {
             placeStructure("factory", 1, 2);
         }
+
     }
 
 
@@ -232,8 +235,8 @@ public class GridManager : MonoBehaviour
 
         for (int i = 0; i < grid.Count; i++)
         {
-            grid[i].occupied = true;
-            grid[i].State.setTreeState(-1);
+            grid[i].State.occupied = true;
+            grid[i].State.treeState = -1;
         }
         unhideTrees();
 
@@ -259,7 +262,7 @@ public class GridManager : MonoBehaviour
     void setOccupy(List<CellScript> cells, bool occupied) {
         for (int i = 0; i < cells.Count; i++)
         {
-            cells[i].occupied = occupied;
+            cells[i].State.occupied = occupied;
         }
     }
 
@@ -267,7 +270,7 @@ public class GridManager : MonoBehaviour
     {
         for (int i = 0; i < cells.Count; i++)
         {
-            if (cells[i].occupied) {
+            if (cells[i].State.occupied) {
                 return false;
             }
         }
@@ -340,11 +343,29 @@ public class GridManager : MonoBehaviour
         // Store all of the updated cells in a new array so that we don't "contaminate" the cells
         // in state "time" with the cells in state "time + 1".
         CellState[,] nextState = new CellState[gridW, gridH];
-        for (int x = 0; x < gridW; x++) {
-            for (int y = 0; y < gridH; y++) {
-                nextState[x,y] = grid[x,y].GenereateNextSimulationStep();
+
+        // make it a copy
+        for (int x = 0; x < gridW; x++)
+        {
+            for (int y = 0; y < gridH; y++)
+            {
+                nextState[x, y] = grid[x, y].State.Clone();
             }
         }
+
+        for (int x = 0; x < gridW; x++)
+        {
+            for (int y = 0; y < gridH; y++)
+            {
+                nextState[x, y] = grid[x, y].GenereateNextSimulationStep();
+            }
+        }
+
+        for (int i = 0; i < factoryList.Count; i++) {
+            factoryList[i].GetComponent<FactoryScript>().handleSimulation(nextState);
+        }
+
+
 
         // Apply the new states (now that we are done updating all the cells)
         for (int x = 0; x < gridW; x++) {
@@ -369,6 +390,80 @@ public class GridManager : MonoBehaviour
         }
         return null;
     }
+
+    public List<CellState> GetBorderingCellsByOffset(int centerX, int centerY, int length, int width,  int offset, CellState[,] grid) {
+        List<CellState> borderingCells = new List<CellState>();
+
+        int leftX = centerX - length - offset;
+        int rightX = centerX + length + offset;
+
+        int upY = centerY + width + offset;
+        int downY = centerY - width - offset;
+        for (int i = leftX+1; i < rightX; i++) {
+            if (!(i < 0 || i >= gridW || upY < 0 || upY >= gridH))
+            {
+                borderingCells.Add(grid[i, upY]);
+            }
+            if (!(i < 0 || i >= gridW || downY < 0 || downY >= gridH))
+            {
+                borderingCells.Add(grid[i, downY]);
+            }      
+        }
+        for (int i = downY; i <= upY; i++) {
+            if (!(leftX < 0 || leftX >= gridW || i < 0 || i >= gridH))
+            {
+                borderingCells.Add(grid[leftX, i]);
+            }
+            if (!(rightX < 0 || rightX >= gridW || i < 0 || i >= gridH))
+            {
+                borderingCells.Add(grid[rightX, i]);
+            }
+
+        }
+
+
+        return borderingCells;
+    }
+
+    public List<CellScript> GetBorderingCellsByOffsetCellScript(int centerX, int centerY, int length, int width, int offset, CellScript[,] grid)
+    {
+        List<CellScript> borderingCells = new List<CellScript>();
+
+        int leftX = centerX - length - offset;
+        int rightX = centerX + length + offset;
+
+        int upY = centerY + width + offset;
+        int downY = centerY - width - offset;
+        for (int i = leftX + 1; i < rightX; i++)
+        {
+            if (!(i < 0 || i >= gridW || upY < 0 || upY >= gridH))
+            {
+                borderingCells.Add(grid[i, upY]);
+            }
+            if (!(i < 0 || i >= gridW || downY < 0 || downY >= gridH))
+            {
+                borderingCells.Add(grid[i, downY]);
+            }
+        }
+        for (int i = downY; i <= upY; i++)
+        {
+            if (!(leftX < 0 || leftX >= gridW || i < 0 || i >= gridH))
+            {
+                borderingCells.Add(grid[leftX, i]);
+            }
+            if (!(rightX < 0 || rightX >= gridW || i < 0 || i >= gridH))
+            {
+                borderingCells.Add(grid[rightX, i]);
+            }
+
+        }
+
+
+        return borderingCells;
+    }
+
+
+
 
     // Gets all cell states within a specified range around a center cell.
     public List<CellState> GetCellStatesInRange(int centerX, int centerY, int rangeX, int rangeY) {
@@ -422,11 +517,11 @@ public class GridManager : MonoBehaviour
                 CellScript cs = cell.GetComponent<CellScript>();
 
                 // Make the tree start at 100
+
+
+
+
                 
-
-
-
-              
                 cs.State.height = 1f;
                 cs.State.x = x;
                 cs.State.y = y;
@@ -435,8 +530,17 @@ public class GridManager : MonoBehaviour
                 // Set cell size and parent
                 cell.transform.localScale = new Vector3(cellWidth, 1, cellHeight);
                 cell.transform.SetParent(transform);
-                cs.State.setTreeState(100);
-                
+
+
+                int treeStateNumber = (int)(Mathf.PerlinNoise((Time.time + x) / 25f, (Time.time + y) / 25f) * 200f);
+                treeStateNumber = Mathf.Clamp(treeStateNumber, 0, 100);
+                if (treeStateNumber < 50) {
+                    treeStateNumber = -1;
+                }
+
+
+                cs.State.treeState = treeStateNumber;
+
                 // Store reference in the grid array
                 grid[x,y] = cell.GetComponent<CellScript>();
             }

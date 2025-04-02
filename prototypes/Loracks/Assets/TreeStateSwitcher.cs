@@ -37,11 +37,11 @@ public class TreeStateSwitcher : MonoBehaviour
 
 
 
-    public void setTreeVisual(int level) {
+    public void setTreeVisual(float level) {
         if (level > 0)
         {
-            int levelIndex = (level - 1) / 20;
-            currentIndex = levelIndex;
+            float levelIndex = (level - 1) / 20;
+            currentIndex = (int) levelIndex;
             for (int i = 0; i < treeModels.Count; i++)
             {
                 treeModels[i].SetActive(i == levelIndex);
