@@ -24,8 +24,13 @@ public class CellState
         }
         set
         {
+            //Debug.Log(value);
+            if (value <= -1) {
+                Debug.Log("Value is less than -1");
+            }
             _treeState = value;
             _treeState = Mathf.Clamp(_treeState, -1, 100);
+            //Debug.Log(_treeState);
             treeScript.setTreeVisual(_treeState);
         }
     }
@@ -49,7 +54,8 @@ public class CellState
             height = this.height,
             _treeState = this._treeState,
             treeScript = this.treeScript,
-            being_harvested = this.being_harvested
+            being_harvested = this.being_harvested,
+            occupied = this.occupied
         };
     }
 }

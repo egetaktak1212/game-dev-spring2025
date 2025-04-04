@@ -60,6 +60,7 @@ public class TreeStateSwitcher : MonoBehaviour
     public void temporarlyTurnOff() {
         for (int i = 0; i < treeModels.Count; i++)
         {
+            Debug.Log("TURNED OFF");
             treeModels[i].SetActive(false);
         }
     }
@@ -67,6 +68,7 @@ public class TreeStateSwitcher : MonoBehaviour
     public void temporarlyTurnOn() {
         for (int i = 0; i < treeModels.Count; i++)
         {
+            
             treeModels[i].SetActive(i == currentIndex);
         }
     }

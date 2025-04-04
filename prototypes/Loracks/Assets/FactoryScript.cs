@@ -11,8 +11,8 @@ public class FactoryScript : MonoBehaviour
 
     public int centerX;
     public int centerY;
-    float harvestAmount = 1;
-    float storage = 0;
+    float harvestAmount = 0.1f;
+    public float storage = 0;
 
     void Start()
     {

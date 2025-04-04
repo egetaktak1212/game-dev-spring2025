@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 // Handles grid creation, cell updates, and provides utility functions for cell access.
 public class GridManager : MonoBehaviour
 {
+    
     // Singleton instance for easy access from other scripts
     public static GridManager Instance { get; private set; }
 
@@ -39,6 +40,19 @@ public class GridManager : MonoBehaviour
     Material hoveringClearMaterial;
     [SerializeField]
     Material hoveringOccupiedMaterial;
+
+
+
+    Coroutine pathfindingCoroutine;
+    float pathfindingSpeed = 0.00f;
+    public CellScript startCell;
+    public CellScript endCell;
+
+
+
+
+    int debugInt = 0;
+
 
     // Cell size parameters
     float cellWidth = 1;
@@ -99,6 +113,7 @@ public class GridManager : MonoBehaviour
     // Called every frame
     void Update()
     {
+        debugInt++;
         // Handle simulation timing
         nextSimulationStepTimer -= Time.deltaTime;
         if (nextSimulationStepTimer < 0)
@@ -111,14 +126,22 @@ public class GridManager : MonoBehaviour
             puttingDownFactory = !puttingDownFactory;
         }
 
+        if (Input.GetKeyDown(KeyCode.G)) {
+            startCell = grid[1, 1];
+            endCell = grid[10, 10];
+            
+            pathfindingCoroutine = StartCoroutine(AStarPath());
 
+        }
 
         // Handle mouse hover detection
         bool puttingDownAnything = puttingDownFactory /* or any other ones of the same bool */;
         if (!puttingDownAnything)
         {
             //mouseHoverDetection();
-            unhideTrees();
+            if (debugInt < 10) {
+                unhideTrees(); 
+            }
             cleanCellsAfterPlacingStructure();
         }
         else {
@@ -128,6 +151,168 @@ public class GridManager : MonoBehaviour
             placeStructure("factory", 1, 2);
         }
 
+
+
+
+    }
+
+    IEnumerator AStarPath()
+    {
+        // A* Pathfinding algorithm implementation
+        List<CellScript> openSet = new List<CellScript>();
+        HashSet<CellScript> closedSet = new HashSet<CellScript>();
+        List<CellScript> pathSet = new List<CellScript>();
+        openSet.Add(startCell); // Start from the first cell
+
+        //// Visualize the starting and ending cells
+        //startCell.State.pathStateVisuals = "start";
+        //startCell.UpdateVisuals();
+        //endCell.State.pathStateVisuals = "end";
+        //endCell.UpdateVisuals();
+
+        Dictionary<CellScript, float> gScore = new Dictionary<CellScript, float>();
+        Dictionary<CellScript, float> fScore = new Dictionary<CellScript, float>();
+        Dictionary<CellScript, CellScript> cameFrom = new Dictionary<CellScript, CellScript>();
+
+        foreach (var cell in grid)
+        {
+            gScore[cell] = float.MaxValue; // Cost from start to the cell
+            fScore[cell] = float.MaxValue; // Total cost from start to goal through the cell
+        }
+        gScore[startCell] = 0;
+        fScore[startCell] = Heuristic(startCell, endCell); // Heuristic cost from start to goal
+
+        while (openSet.Count > 0)
+        {
+            CellScript current = GetLowestFScoreCell(openSet, fScore);
+            if (current == endCell)
+            {
+                // Reconstruct and visualize the final path
+                List<CellScript> path = ReconstructPath(cameFrom, current);
+                foreach (CellScript cell in path) {
+                    Debug.Log(cell.State.x + " " + cell.State.y);
+                    cell.State.treeScript.temporarlyTurnOff();
+                }
+                foreach (CellScript cell in path)
+                {
+                    if (cell != startCell && cell != endCell)
+                    {
+                        
+                        for (int i = 0; i < pathSet.Count; i++)
+                        {
+                            path[i].State.treeScript.temporarlyTurnOff();
+                            yield return new WaitForSeconds(pathfindingSpeed);
+                        }
+                    }
+                }
+
+                // Reset the selection for the next pathfinding
+                startCell = null;
+                endCell = null;
+
+                pathfindingCoroutine = null;
+
+                yield break;
+            }
+
+            openSet.Remove(current);
+            closedSet.Add(current);
+
+            if (current != startCell && current != endCell)
+            {
+                //current.State.pathStateVisuals = "closed";
+                //current.UpdateVisuals();
+            }
+
+            foreach (var neighbor in GetNeighbors(current))
+            {
+                if (closedSet.Contains(neighbor)) continue; // Ignore already evaluated neighbors
+
+                float tentativeGScore = gScore[current] + CalculateCost(current, neighbor);
+                if (!openSet.Contains(neighbor))
+                {
+                    openSet.Add(neighbor); // Discover a new cell
+
+                    //neighbor.State.pathStateVisuals = "open";
+                    //neighbor.UpdateVisuals();
+                }
+                else if (tentativeGScore >= gScore[neighbor])
+                {
+                    continue; // Not a better path
+                }
+
+                // This path is the best until now. Record it!
+                cameFrom[neighbor] = current;
+                gScore[neighbor] = tentativeGScore;
+                fScore[neighbor] = gScore[neighbor] + Heuristic(neighbor, endCell);
+            }
+            yield return new WaitForSeconds(pathfindingSpeed);
+        }
+
+        Debug.Log("No path found!");
+        // Reset the selection for the next pathfinding
+        startCell = null;
+        endCell = null;
+
+        pathfindingCoroutine = null;
+    }
+
+    // Helper method to reconstruct the path from start to goal
+    private List<CellScript> ReconstructPath(Dictionary<CellScript, CellScript> cameFrom, CellScript current)
+    {
+        List<CellScript> path = new List<CellScript>();
+        path.Add(current);
+
+        while (cameFrom.ContainsKey(current))
+        {
+            current = cameFrom[current];
+            path.Add(current);
+        }
+
+        path.Reverse(); // Reverse to get path from start to goal
+        return path;
+    }
+
+    private float CalculateCost(CellScript a, CellScript b)
+    {
+        return 1;
+    }
+
+    private float Heuristic(CellScript a, CellScript b)
+    {
+        // Using Manhattan distance as heuristic
+        return Mathf.Abs(a.State.x - b.State.x) + Mathf.Abs(a.State.y - b.State.y);
+    }
+
+    private CellScript GetLowestFScoreCell(List<CellScript> openSet, Dictionary<CellScript, float> fScore)
+    {
+        CellScript lowest = openSet[0];
+        foreach (var cell in openSet)
+        {
+            if (fScore[cell] < fScore[lowest])
+            {
+                lowest = cell;
+            }
+        }
+        return lowest;
+    }
+
+    public List<CellScript> GetNeighbors(CellScript cell, bool includeDiagonals = false)
+    {
+        List<CellScript> neighbors = new List<CellScript>();
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (Mathf.Abs(x) == Mathf.Abs(y) && !includeDiagonals) continue; // Skip diagonal neighbors
+                CellState neighborState = GridManager.Instance.GetCellStateByIndex(cell.State.x + x, cell.State.y + y);
+                if (neighborState != null)
+                {
+                    neighbors.Add(GridManager.Instance.grid[neighborState.x, neighborState.y]);
+                }
+            }
+        }
+        return neighbors;
     }
 
 
@@ -336,6 +521,19 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public float getTotalWoodHarvested() {
+        float totalWood = 0;
+
+        for (int i = 0; i < factoryList.Count; i++) {
+            totalWood += factoryList[i].GetComponent<FactoryScript>().storage;
+        }
+
+
+        return totalWood;    
+    }
+
+
+
     // Advances the simulation by one step
     void SimulationStep() 
     {
@@ -357,7 +555,7 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < gridH; y++)
             {
-                nextState[x, y] = grid[x, y].GenereateNextSimulationStep();
+                nextState[x, y] = grid[x, y].GenereateNextSimulationStep(nextState[x, y]);
             }
         }
 

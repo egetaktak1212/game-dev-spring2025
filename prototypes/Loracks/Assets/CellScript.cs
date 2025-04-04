@@ -15,13 +15,15 @@ public class CellScript : MonoBehaviour
     private CellState _state = new CellState();
 
 
-    
-    
+    float growthSpeed = 500000f;
+
+    bool debugBool = true;
 
 
     private void OnEnable()
     {
         _state.treeScript = treeScript;
+
     }
 
 
@@ -40,8 +42,11 @@ public class CellScript : MonoBehaviour
 
     void Start()
     {
-        
 
+        if (State.x == 1 && State.y == 1)
+        {
+            debugBool = true;
+        }
         // Cache the material for performance and initialize visuals
         heightCubeMaterial = heightCube.GetComponentInChildren<Renderer>().material;
         UpdateVisuals();
@@ -82,15 +87,14 @@ public class CellScript : MonoBehaviour
     }   
 
     // Calculates the next state of this cell for the simulation
-    public CellState GenereateNextSimulationStep()
+    public CellState GenereateNextSimulationStep(CellState nextState)
     {
-        // Create a copy of the current state to modify
-        CellState nextState = this.State.Clone();
-
         ApplyTreeGrowth(nextState);
 
         return nextState;
+        
     }
+
 
     void ApplyTreeGrowth(CellState cellState) {
 
@@ -111,11 +115,19 @@ public class CellScript : MonoBehaviour
                 }
             }
 
-            Debug.Log(amountToGrow);
-
-            State.treeState += amountToGrow;
-
-            
+            if (debugBool)
+            {
+                //Debug.Log("Amount to grow before mult = " + amountToGrow);
+                amountToGrow *= cellState.treeState / growthSpeed;
+                //Debug.Log("Amount to grow after mult = " + amountToGrow);
+                //Debug.Log("Treestate before = " + cellState.treeState);
+                float temp = cellState.treeState;
+                cellState.treeState = temp + amountToGrow;
+                if (temp + amountToGrow == -1) {
+                    //Debug.Log("-1 being passed here");
+                }
+                //Debug.Log("Treestate after = " + cellState.treeState);
+            }
 
         }
         
