@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 public class TreeStateSwitcher : MonoBehaviour
@@ -41,6 +40,7 @@ public class TreeStateSwitcher : MonoBehaviour
         if (level > 0)
         {
             float levelIndex = (level - 1) / 20;
+            levelIndex = (int)(levelIndex);
             currentIndex = (int) levelIndex;
             for (int i = 0; i < treeModels.Count; i++)
             {

@@ -1,9 +1,6 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
-using System.Collections;
-using TreeEditor;
-using Unity.VisualScripting;
 
 
 // Manages the grid of cells for the simulation.
@@ -30,6 +27,8 @@ public class GridManager : MonoBehaviour
 
     [SerializeField]
     GameObject factoryPrefab;
+    [SerializeField]
+    GameObject vehiclePrefab;
 
     // Materials for visual feedback when hovering over cells
     [SerializeField]
@@ -48,6 +47,7 @@ public class GridManager : MonoBehaviour
     public CellScript startCell;
     public CellScript endCell;
 
+    public bool debugBool = false;
 
 
 
@@ -68,8 +68,14 @@ public class GridManager : MonoBehaviour
 
     // Are we trying to put down an object
     bool puttingDownFactory = false;
+    bool puttingDownVehicle = false;
+    int simStepCounter = 0;
+    int runEvery = 5;
+
 
     List<GameObject> factoryList = new List<GameObject>();
+    List<GameObject> vehicleList = new List<GameObject>();
+
     /*
     List<GameObject> homeList = new List<GameObject>(); 
     List<GameObject> beekeeperList = new List<GameObject>(); 
@@ -113,7 +119,6 @@ public class GridManager : MonoBehaviour
     // Called every frame
     void Update()
     {
-        debugInt++;
         // Handle simulation timing
         nextSimulationStepTimer -= Time.deltaTime;
         if (nextSimulationStepTimer < 0)
@@ -127,28 +132,29 @@ public class GridManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.G)) {
-            startCell = grid[1, 1];
-            endCell = grid[10, 10];
-            
-            pathfindingCoroutine = StartCoroutine(AStarPath());
+            puttingDownVehicle = !puttingDownVehicle;
 
         }
 
         // Handle mouse hover detection
-        bool puttingDownAnything = puttingDownFactory /* or any other ones of the same bool */;
+        bool puttingDownAnything = puttingDownFactory || puttingDownVehicle/* or any other ones of the same bool */;
         if (!puttingDownAnything)
         {
             //mouseHoverDetection();
-            if (debugInt < 10) {
-                unhideTrees(); 
-            }
+
+            unhideTrees(); 
+
             cleanCellsAfterPlacingStructure();
         }
         else {
             hideTrees();
         }
-        if (puttingDownFactory) {
+        if (puttingDownFactory)
+        {
             placeStructure("factory", 1, 2);
+        }
+        else if (puttingDownVehicle) {
+            placeStructure("vehicle", 1, 1);
         }
 
 
@@ -156,7 +162,7 @@ public class GridManager : MonoBehaviour
 
     }
 
-    IEnumerator AStarPath()
+    public List<CellScript> AStarPath(CellScript startCell, CellScript endCell)
     {
         // A* Pathfinding algorithm implementation
         List<CellScript> openSet = new List<CellScript>();
@@ -201,18 +207,16 @@ public class GridManager : MonoBehaviour
                         for (int i = 0; i < pathSet.Count; i++)
                         {
                             path[i].State.treeScript.temporarlyTurnOff();
-                            yield return new WaitForSeconds(pathfindingSpeed);
                         }
                     }
                 }
-
+                return path;
                 // Reset the selection for the next pathfinding
                 startCell = null;
                 endCell = null;
 
                 pathfindingCoroutine = null;
 
-                yield break;
             }
 
             openSet.Remove(current);
@@ -246,15 +250,15 @@ public class GridManager : MonoBehaviour
                 gScore[neighbor] = tentativeGScore;
                 fScore[neighbor] = gScore[neighbor] + Heuristic(neighbor, endCell);
             }
-            yield return new WaitForSeconds(pathfindingSpeed);
         }
 
         Debug.Log("No path found!");
         // Reset the selection for the next pathfinding
         startCell = null;
         endCell = null;
-
+        
         pathfindingCoroutine = null;
+        return null;
     }
 
     // Helper method to reconstruct the path from start to goal
@@ -275,7 +279,7 @@ public class GridManager : MonoBehaviour
 
     private float CalculateCost(CellScript a, CellScript b)
     {
-        return 1;
+        return Mathf.Abs(b.State.treeState - 100f);
     }
 
     private float Heuristic(CellScript a, CellScript b)
@@ -417,7 +421,9 @@ public class GridManager : MonoBehaviour
             placeFactory(x, y, grid);
             //add to a list of game objects too
         } //else every other structure i wanna add
-
+        if (structName == "vehicle") {
+            placeVehicle(x, y, grid);
+        }
         for (int i = 0; i < grid.Count; i++)
         {
             grid[i].State.occupied = true;
@@ -426,6 +432,22 @@ public class GridManager : MonoBehaviour
         unhideTrees();
 
     }
+
+    void placeVehicle(int x, int y, List<CellScript> grid)
+    {
+        Vector3 pos = new Vector3(x, 1, y);
+        GameObject vehicle = Instantiate(vehiclePrefab, pos, Quaternion.identity);
+        vehicleList.Add(vehicle);
+
+        puttingDownVehicle = false;
+
+        VehicleScript vehicleScript = vehicle.GetComponent<VehicleScript>();
+        vehicleScript.setGrid(grid);
+        vehicleScript.centerX = x;
+        vehicleScript.centerY = y;
+
+    }
+
 
     void placeFactory(int x, int y, List<CellScript> grid) {
         Vector3 pos = new Vector3(x, 1, y);
@@ -527,6 +549,9 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < factoryList.Count; i++) {
             totalWood += factoryList[i].GetComponent<FactoryScript>().storage;
         }
+        for (int i = 0; i < vehicleList.Count; i++) {
+            totalWood += vehicleList[i].GetComponent<VehicleScript>().storage;
+        }
 
 
         return totalWood;    
@@ -535,8 +560,9 @@ public class GridManager : MonoBehaviour
 
 
     // Advances the simulation by one step
-    void SimulationStep() 
+    void SimulationStep()
     {
+        simStepCounter++;
         // Calculate the next state for all cells
         // Store all of the updated cells in a new array so that we don't "contaminate" the cells
         // in state "time" with the cells in state "time + 1".
@@ -562,9 +588,12 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < factoryList.Count; i++) {
             factoryList[i].GetComponent<FactoryScript>().handleSimulation(nextState);
         }
-
-
-
+        if (simStepCounter % runEvery == 0) {
+            for (int i = 0; i < vehicleList.Count; i++)
+            {
+                vehicleList[i].GetComponent<VehicleScript>().handleSimulation(nextState);
+            }
+        }
         // Apply the new states (now that we are done updating all the cells)
         for (int x = 0; x < gridW; x++) {
             for (int y = 0; y < gridH; y++) {
@@ -686,6 +715,35 @@ public class GridManager : MonoBehaviour
         return cellStates;
     }
 
+    public List<CellScript> GetCellScriptsInRange(int centerX, int centerY, int rangeX, int rangeY)
+    {
+        List<CellScript> cellStates = new List<CellScript>();
+
+        // Loop through all cells in the rectangular range around the center cell
+        for (int x = centerX - rangeX; x <= centerX + rangeX; x++)
+        {
+            for (int y = centerY - rangeY; y <= centerY + rangeY; y++)
+            {
+                // Skip cells that are outside the grid boundaries
+                if (x < 0 || x >= gridW || y < 0 || y >= gridH)
+                {
+                    continue;
+                }
+
+                // Skip the center cell since we only want neighbors
+                if (x == centerX && y == centerY) continue;
+
+                // Add the neighbor's state to our collection
+                cellStates.Add(grid[x, y]);
+            }
+        }
+
+        return cellStates;
+    }
+
+
+
+
     // Converts a world position to grid indices
     Vector2Int WorldPointToGridIndices(Vector3 worldPoint) {
         Vector2Int gridPosition = new Vector2Int();
@@ -743,5 +801,6 @@ public class GridManager : MonoBehaviour
                 grid[x,y] = cell.GetComponent<CellScript>();
             }
         }
+        debugBool = true;
     }
 }

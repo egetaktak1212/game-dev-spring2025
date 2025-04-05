@@ -115,19 +115,9 @@ public class CellScript : MonoBehaviour
                 }
             }
 
-            if (debugBool)
-            {
-                //Debug.Log("Amount to grow before mult = " + amountToGrow);
-                amountToGrow *= cellState.treeState / growthSpeed;
-                //Debug.Log("Amount to grow after mult = " + amountToGrow);
-                //Debug.Log("Treestate before = " + cellState.treeState);
-                float temp = cellState.treeState;
-                cellState.treeState = temp + amountToGrow;
-                if (temp + amountToGrow == -1) {
-                    //Debug.Log("-1 being passed here");
-                }
-                //Debug.Log("Treestate after = " + cellState.treeState);
-            }
+            amountToGrow *= cellState.treeState / growthSpeed;
+            float temp = cellState.treeState;
+            cellState.treeState = temp + amountToGrow;
 
         }
         
