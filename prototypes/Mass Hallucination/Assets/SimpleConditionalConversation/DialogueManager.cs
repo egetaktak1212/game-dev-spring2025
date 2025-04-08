@@ -56,7 +56,7 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-			StartCoroutine(DialogueScene());
+			StartCoroutine(DialogueScene("Emma"));
 
         }
 
@@ -68,15 +68,15 @@ public class DialogueManager : MonoBehaviour
 			Debug.Log("Emma puts on a green shirt.");
 		}
 	}
-    private IEnumerator DialogueScene()
+    private IEnumerator DialogueScene(string name)
     {
 		bool end = false;
 
-        //yield return StartCoroutine(uiManager.ShowDialogueUI());
+        yield return StartCoroutine(uiManager.ShowDialogueUI(name));
 
         while (!end)
 		{
-			SCCLine dialogueResult = DialogueManager.scc.getSCCLine("Emma");
+			SCCLine dialogueResult = DialogueManager.scc.getSCCLine(name);
 			string line = dialogueResult.renderLine();
 
 			//start a coroutine in another script but make this numerator wait until this one is finished.
@@ -119,8 +119,14 @@ public class DialogueManager : MonoBehaviour
 				}
 				yield return null;
 			}
-		}
-		//fade everything
+			Coroutine hideChoices = StartCoroutine(uiManager.ShowChoicesUI(false, false));
+			Coroutine hideChoice1Text = StartCoroutine(uiManager.fadeChoice1Text(true));
+            Coroutine hideChoice2Text = StartCoroutine(uiManager.fadeChoice2Text(true));
+			yield return hideChoices;
+			yield return hideChoice1Text;
+			yield return hideChoice2Text;
+        }
+		yield return StartCoroutine(uiManager.HideDialogueUI());
     }
 
 

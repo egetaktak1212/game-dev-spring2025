@@ -172,6 +172,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7341179588645935725, guid: 657d2da8d71450b4b8a0c5de8f49cff2, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 204314753}
+    - target: {fileID: 7341179588645935725, guid: 657d2da8d71450b4b8a0c5de8f49cff2, type: 3}
       propertyPath: useGoogleSheet
       value: 1
       objectReference: {fileID: 0}
