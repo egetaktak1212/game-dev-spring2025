@@ -23,6 +23,10 @@ public class DialogueUIManager : MonoBehaviour
     GameObject speakerText;
     [SerializeField]
     GameObject exit;
+    [SerializeField]
+    GameObject npcInfoCanvas;
+    [SerializeField]
+    TextMeshProUGUI npcInfoText;
 
     float fadeSpeed = 3.0f;
 
@@ -43,6 +47,9 @@ public class DialogueUIManager : MonoBehaviour
     void Start()
     {
         enableEverything(false);
+
+        npcInfoCanvas.SetActive(false);
+        npcInfoText.text = "";
         
     }
 
@@ -372,8 +379,15 @@ public class DialogueUIManager : MonoBehaviour
         {
             while (choice2Text.GetComponent<CanvasRenderer>().GetAlpha() > 0)
             {
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    Debug.Log("here");
+                }
+                float debugSpeed = fadeSpeed * Time.deltaTime;
+                float debugAlpha = choice2Text.GetComponent<CanvasRenderer>().GetAlpha();
                 float newAlpha = choice2Text.GetComponent<CanvasRenderer>().GetAlpha() - fadeSpeed * Time.deltaTime;
                 choice2Text.GetComponent<CanvasRenderer>().SetAlpha(newAlpha);
+                Debug.Log(choice2Text.GetComponent<CanvasRenderer>().GetAlpha());
                 yield return null;
             }
         }
@@ -435,6 +449,19 @@ public class DialogueUIManager : MonoBehaviour
             }
         }
     }
+
+    public void ShowNPCInformation(string name) { 
+        npcInfoCanvas.gameObject.SetActive(true);
+        npcInfoText.text = name;
+    }
+
+    public void HideNPCInformation()
+    {
+        npcInfoCanvas.gameObject.SetActive(false);
+        npcInfoText.text = "";
+    }
+
+
 
 
 

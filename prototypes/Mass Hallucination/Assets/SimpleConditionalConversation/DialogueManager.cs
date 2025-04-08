@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using StarterAssets;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,6 +11,17 @@ public class DialogueManager : MonoBehaviour
 	public static Action<string, string> DialogueAction;
 
 	[SerializeField] DialogueUIManager uiManager;
+
+    [SerializeField] Camera mainCamera;
+    [SerializeField] LayerMask npcLayer;
+	[SerializeField] FirstPersonController fpsController;
+
+	bool cantLookAtNPC = false;
+	bool lookingAtNPC = false;
+	string npcLookAtName = "";
+
+    Coroutine dialogueScene = null;
+
 
 	// NOTE: When you do not use the google sheet option, it is expecting the file
 	// to be named "data.csv" and for it to be in the Resources folder in Assets.
@@ -42,35 +54,32 @@ public class DialogueManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		// An example of getting a line of dialogue.
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			SCCLine line = DialogueManager.scc.getSCCLine("Mike");
-            Debug.Log("Mike says: " + line.renderLine());
-			DialogueAction?.Invoke("Mike", line.renderLine());
-		}
 
         if (Input.GetKeyDown(KeyCode.P))
         {
             scc.DebugPrintAllCharacterStates();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && lookingAtNPC && dialogueScene == null)
         {
-			StartCoroutine(DialogueScene("Emma"));
+			dialogueScene = StartCoroutine(DialogueScene(npcLookAtName));
 
         }
 
-
-        // An example of modifying the state outside of the DialogueManager (e.g. you could put this in some
-        // OnTriggerEnter or something)
-        if (Input.GetKeyDown(KeyCode.G)) {
-			scc.setGameStateValue("Emma", "playerWearing", "equals", "Green shirt");
-			Debug.Log("Emma puts on a green shirt.");
+		if (!cantLookAtNPC) {
+			lookForNPC();
 		}
+		
+
 	}
     private IEnumerator DialogueScene(string name)
     {
+		uiManager.HideNPCInformation();
+		cantLookAtNPC = true;
 		bool end = false;
+		fpsController.lockMovementAndCamera(true);
+
+
 
         yield return StartCoroutine(uiManager.ShowDialogueUI(name));
 
@@ -105,6 +114,7 @@ public class DialogueManager : MonoBehaviour
 				if (Input.GetKeyDown(KeyCode.LeftArrow) && choiceOneExists)
 				{
 					DialogueManager.scc.makeChoice(1, dialogueResult);
+					Debug.Log("LEFT");
 					break;
 				}
 				else if (Input.GetKeyDown(KeyCode.RightArrow) && choiceTwoExists)
@@ -122,11 +132,48 @@ public class DialogueManager : MonoBehaviour
 			Coroutine hideChoices = StartCoroutine(uiManager.ShowChoicesUI(false, false));
 			Coroutine hideChoice1Text = StartCoroutine(uiManager.fadeChoice1Text(true));
             Coroutine hideChoice2Text = StartCoroutine(uiManager.fadeChoice2Text(true));
-			yield return hideChoices;
-			yield return hideChoice1Text;
-			yield return hideChoice2Text;
+            yield return hideChoice2Text;
+            yield return hideChoice1Text;
+            yield return hideChoices;
+			
+			
         }
 		yield return StartCoroutine(uiManager.HideDialogueUI());
+		cantLookAtNPC = false;
+        fpsController.lockMovementAndCamera(false);
+		dialogueScene = null;
+
+    }
+
+	void lookForNPC() {
+        
+		RaycastHit hit;
+
+
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+		if (Physics.Raycast(ray, out hit, Mathf.Infinity, npcLayer))
+		{
+			if (hit.collider.CompareTag("NPC"))
+			{
+				string npcName = hit.collider.gameObject.GetComponent<NPCInformation>().npcName;
+
+				uiManager.ShowNPCInformation(npcName);
+				npcLookAtName = npcName;
+				lookingAtNPC = true;
+			}
+			else
+			{
+				uiManager.HideNPCInformation();
+				lookingAtNPC=false;
+                npcLookAtName = "";
+            }
+		}
+		else {
+			uiManager.HideNPCInformation();
+			lookingAtNPC=false;
+            npcLookAtName = "";
+        }
     }
 
 
