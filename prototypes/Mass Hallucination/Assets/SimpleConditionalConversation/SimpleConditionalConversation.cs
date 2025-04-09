@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class SimpleConditionalConversation 
@@ -17,6 +16,9 @@ public class SimpleConditionalConversation
 
 
 	public Dictionary<string, Dictionary<string, object>> gameStates;
+
+
+
 
 	Hashtable lines;
 
@@ -47,13 +49,15 @@ public class SimpleConditionalConversation
     public SimpleConditionalConversation(string dataPath)
 	{
 		this.gameStates = new Dictionary<string, Dictionary<string, object>>();
-		List<Dictionary<string, object>> data = CSVReader.Read(dataPath);
+        this.gameStates["player"] = new Dictionary<string, object>();
+        List<Dictionary<string, object>> data = CSVReader.Read(dataPath);
 		this.loadLines(data);
 	}
 	
 	public SimpleConditionalConversation(List<Dictionary<string, object>> data)
 	{
         this.gameStates = new Dictionary<string, Dictionary<string, object>>();
+		this.gameStates["player"] = new Dictionary<string, object>();
         this.loadLines(data);
 	}
 	
@@ -241,7 +245,20 @@ public class SimpleConditionalConversation
 	 */
 	public object getGameStateValue(string name, string id) 
 	{
-		if (this.gameStates[name].ContainsKey(id)) {
+
+		if (id.Contains("."))
+		{
+			string[] parts = id.Split('.');
+			string target = parts[0];
+			string key = parts[1];
+
+			if (this.gameStates.ContainsKey(target) && this.gameStates[target].ContainsKey(key))
+			{
+				return this.gameStates[target][key];
+			}
+		}
+
+            if (this.gameStates[name].ContainsKey(id)) {
 			return this.gameStates[name][id];
 		}
 		return null;
@@ -260,7 +277,13 @@ public class SimpleConditionalConversation
 	public void setGameStateValue(string name, string id, string op, object right) 
 	{
 		var character = this.gameStates[name];
-
+        if (id.Contains("."))
+		{
+            string[] parts = id.Split('.');
+            id = parts[1];
+            character = this.gameStates[parts[0]];
+        }
+		
 		if (op == "add") {
 			if (!character.ContainsKey(id)) {
                 character.Add(id, 0);

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using StarterAssets;
@@ -21,6 +20,8 @@ public class DialogueManager : MonoBehaviour
 	string npcLookAtName = "";
 
     Coroutine dialogueScene = null;
+
+
 
 
 	// NOTE: When you do not use the google sheet option, it is expecting the file
