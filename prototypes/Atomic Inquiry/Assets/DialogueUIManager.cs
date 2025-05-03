@@ -71,17 +71,12 @@ public class DialogueUIManager : MonoBehaviour
 
     public IEnumerator DebugCoroutine() {
         Coroutine debug1 = StartCoroutine(WaitFor(1));
-        Debug.Log("A");
         Coroutine debug2 = StartCoroutine(WaitFor(2));
-        Debug.Log("B");
         Coroutine debug3 = StartCoroutine(WaitFor(3));
-        Debug.Log("C");
 
         yield return debug1;
         yield return debug2;
         yield return debug3;
-
-        Debug.Log("Debug Coroutine Done");
     }
 
     public IEnumerator WaitFor(int count) { 
@@ -99,15 +94,10 @@ public class DialogueUIManager : MonoBehaviour
         Coroutine fadeText = StartCoroutine(fadeSpeakerText(false));
         Coroutine fadeExitButton = StartCoroutine(fadeExit(false));
 
-        Debug.Log("A");
         yield return fadeName;
-        Debug.Log("B");
         yield return fadePanel;
-        Debug.Log("C");
         yield return fadeText;
-        Debug.Log("D");
         yield return fadeExitButton;
-        Debug.Log("ShowDialogueUI is finshed");
     }
 
     public IEnumerator HideDialogueUI()
@@ -142,7 +132,6 @@ public class DialogueUIManager : MonoBehaviour
         yield return fadeExitButton;
 
         //enableEverything(false);
-        Debug.Log("HideDialogueUI is finshed");
     }
 
 
@@ -174,7 +163,6 @@ public class DialogueUIManager : MonoBehaviour
         if (fadeChoice4 != null) {
             yield return fadeChoice4;
         }
-        Debug.Log("ShowChoicesUI is finshed");
     }
     public IEnumerator MakeDialogueText(string text)
     {
@@ -186,7 +174,6 @@ public class DialogueUIManager : MonoBehaviour
         dialogueText.GetComponent<TextMeshProUGUI>().text = text;
 
         StartCoroutine(fadeDialogueText(false));
-        Debug.Log("MakeDialogueText is finshed");
     }
 
 
@@ -199,7 +186,6 @@ public class DialogueUIManager : MonoBehaviour
         choice1Text.GetComponent<TextMeshProUGUI>().text = text;
 
         StartCoroutine(fadeChoice1Text(false));
-        Debug.Log("MakeChoice1Text is finshed");
     }
     public IEnumerator MakeChoice2Text(string text)
     {
@@ -211,7 +197,6 @@ public class DialogueUIManager : MonoBehaviour
         choice2Text.GetComponent<TextMeshProUGUI>().text = text;
 
         StartCoroutine(fadeChoice2Text(false));
-        Debug.Log("MakeChoice2Text is finshed");
     }
     public IEnumerator MakeChoice3Text(string text)
     {
@@ -223,7 +208,6 @@ public class DialogueUIManager : MonoBehaviour
         choice3Text.GetComponent<TextMeshProUGUI>().text = text;
 
         StartCoroutine(fadeChoice3Text(false));
-        Debug.Log("MakeChoice3Text is finshed");
     }
     public IEnumerator MakeChoice4Text(string text)
     {
@@ -235,7 +219,6 @@ public class DialogueUIManager : MonoBehaviour
         choice4Text.GetComponent<TextMeshProUGUI>().text = text;
 
         StartCoroutine(fadeChoice4Text(false));
-        Debug.Log("MakeChoice4Text is finshed");
     }
 
 
@@ -325,7 +308,6 @@ public class DialogueUIManager : MonoBehaviour
             {
                 float newAlpha = dialoguePanel.GetComponent<CanvasRenderer>().GetAlpha() + fadeSpeed * Time.deltaTime;
                 dialoguePanel.GetComponent<CanvasRenderer>().SetAlpha(newAlpha);
-                Debug.Log(dialoguePanel.GetComponent<CanvasRenderer>().GetAlpha());
                 yield return null;
             }
         }
@@ -406,7 +388,6 @@ public class DialogueUIManager : MonoBehaviour
                 float debugAlpha = choice2Text.GetComponent<CanvasRenderer>().GetAlpha();
                 float newAlpha = choice2Text.GetComponent<CanvasRenderer>().GetAlpha() - fadeSpeed * Time.deltaTime;
                 choice2Text.GetComponent<CanvasRenderer>().SetAlpha(newAlpha);
-                Debug.Log(choice2Text.GetComponent<CanvasRenderer>().GetAlpha());
                 yield return null;
             }
         }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class SimpleConditionalConversation 
 {
@@ -336,4 +338,40 @@ public class SimpleConditionalConversation
 			}
 		}
 	}
+
+
+	public bool checkIfEveryoneAgrees() {
+
+		var Argo2State = getGameStateValue("Argonaut 2", "questState");
+		var Argo3State = getGameStateValue("Argonaut 3", "questState");
+
+
+		if (Argo2State == null || Argo3State == null) {
+			return false;
+		}
+        string[] parts2 = ((string) Argo2State).Split('T');
+        string questArgo2 = parts2[0];
+        int questNumber2 = Convert.ToInt32(questArgo2.Substring(1));
+
+
+        string[] parts3 = ((string) Argo3State).Split('T');
+        string questArgo3 = parts3[0];
+		int questNumber3 = Convert.ToInt32(questArgo3.Substring(1));
+
+
+		if (questNumber2 > 6 && questNumber2 > 6) {
+            return questNumber2 == questNumber3;
+        }
+
+
+
+        return false;
+	}
+
+
+
+
+
+
+
 }

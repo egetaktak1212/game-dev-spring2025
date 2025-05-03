@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     Coroutine dialogueScene = null;
 
-
+	bool keepCheckingEveryoneAgrees = true;
 
 
 	// NOTE: When you do not use the google sheet option, it is expecting the file
@@ -70,7 +70,29 @@ public class DialogueManager : MonoBehaviour
 		if (!cantLookAtNPC) {
 			lookForNPC();
 		}
-		
+
+
+		if (DialogueManager.scc != null)
+		{
+			if (keepCheckingEveryoneAgrees)
+			{
+				if (DialogueManager.scc.checkIfEveryoneAgrees())
+				{
+					keepCheckingEveryoneAgrees = false;
+					scc.setGameStateValue("Initiate Mission", "everyoneAgrees", "equals", "true");
+
+				}
+			}
+
+			var startMission = DialogueManager.scc.getGameStateValue("Initiate Mission", "startMission");
+			
+            if (startMission != null && (bool) startMission) {
+				Debug.Log("start ending cutscene");
+			}
+
+
+		}
+
 
 	}
     private IEnumerator DialogueScene(string name)
@@ -92,7 +114,6 @@ public class DialogueManager : MonoBehaviour
 			//start a coroutine in another script but make this numerator wait until this one is finished.
 			yield return StartCoroutine(uiManager.MakeDialogueText(line));
 
-			Debug.Log("Emma says: " + line);
 			bool choiceOneExists = !string.IsNullOrEmpty(dialogueResult.choice1);
             bool choiceTwoExists = !string.IsNullOrEmpty(dialogueResult.choice2);
 			bool choiceThreeExists = !string.IsNullOrEmpty(dialogueResult.choice3);
@@ -100,39 +121,38 @@ public class DialogueManager : MonoBehaviour
 
 			if (choiceOneExists || choiceTwoExists || choiceThreeExists || choiceFourExists)
 			{
-				Debug.Log("A");
+
 				yield return StartCoroutine(uiManager.ShowChoicesUI(choiceOneExists, choiceTwoExists, choiceThreeExists, choiceFourExists));
-                Debug.Log("B");
+
             }
 			if (choiceOneExists)
 			{
-                Debug.Log("C");
+
                 yield return StartCoroutine(uiManager.MakeChoice1Text(dialogueResult.choice1));
-				Debug.Log("Choice 1 (Left): " + dialogueResult.choice1);
-                Debug.Log("D");
+
             }
 			if (choiceTwoExists)
 			{
 				yield return StartCoroutine(uiManager.MakeChoice2Text(dialogueResult.choice2));
-				Debug.Log("Choice 2 (Right): " + dialogueResult.choice2);
+
 			}
             if (choiceThreeExists)
             {
                 yield return StartCoroutine(uiManager.MakeChoice3Text(dialogueResult.choice3));
-                Debug.Log("Choice 3 (Left): " + dialogueResult.choice3);
+
             }
             if (choiceFourExists)
             {
                 yield return StartCoroutine(uiManager.MakeChoice4Text(dialogueResult.choice4));
-                Debug.Log("Choice 4 (Right): " + dialogueResult.choice4);
+
             }
-            Debug.Log("E");
+
             while (true)
 			{
 				if (Input.GetKeyDown(KeyCode.LeftArrow) && choiceOneExists)
 				{
 					DialogueManager.scc.makeChoice(1, dialogueResult);
-					Debug.Log("LEFT");
+
 					break;
 				}
 				else if (Input.GetKeyDown(KeyCode.RightArrow) && choiceTwoExists)
