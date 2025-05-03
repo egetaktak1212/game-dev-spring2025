@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using StarterAssets;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -87,8 +88,31 @@ public class DialogueManager : MonoBehaviour
 			var startMission = DialogueManager.scc.getGameStateValue("Initiate Mission", "startMission");
 			
             if (startMission != null && (bool) startMission) {
-				Debug.Log("start ending cutscene");
-			}
+                var Argo2State = DialogueManager.scc.getGameStateValue("Argonaut 2", "questState");
+                var Argo3State = DialogueManager.scc.getGameStateValue("Argonaut 3", "questState");
+
+                string[] parts2 = ((string)Argo2State).Split('T');
+                string questArgo2 = parts2[0];
+                int questNumber2 = Convert.ToInt32(questArgo2.Substring(1));
+
+
+                string[] parts3 = ((string)Argo3State).Split('T');
+                string questArgo3 = parts3[0];
+                int questNumber3 = Convert.ToInt32(questArgo3.Substring(1));
+
+				if (questNumber2 == 7 && questNumber3 == 7)
+				{
+                    SceneManager.LoadScene("LetItHappenEnding");
+                }
+				else if (questNumber2 == 8 && questNumber3 == 8)
+				{
+                    SceneManager.LoadScene("BigGunEnding");
+                }
+				else if (questNumber2 == 9 && questNumber3 == 9) {
+                    SceneManager.LoadScene("BigMagnetEnding");
+                }
+
+            }
 
 
 		}
